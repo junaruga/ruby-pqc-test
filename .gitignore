@@ -1,0 +1,3 @@
+/rubygems/build/*/*.gem
+/rubygems/server
+/rubygems/client
