@@ -14,10 +14,10 @@
    $ script/run_server.sh
    ```
 
-3. Test the client in another terminal.
+3. Run the client in another terminal.
 
    ```
-   $ script/test_client.sh
+   $ script/run_client.sh
    ```
 
 ## HTTPS
@@ -38,10 +38,10 @@ requests. RubyGems uses HEAD requests in `gem install`.
    $ script/run_ssl_server.rb
    ```
 
-3. Test the client in another terminal.
+3. Run the client in another terminal.
 
    ```
-   $ script/test_ssl_client.sh
+   $ script/run_ssl_client.sh
    ```
 
 ### Why not `openssl s_server`?
@@ -61,7 +61,7 @@ $ openssl s_server \
 The client script gets stuck at the HEAD request:
 
 ```
-$ script/test_ssl_client.sh
+$ script/run_ssl_client.sh
 ...
 + gem install hello-pqc --clear-sources -s https://localhost:8089/ -V
 HEAD https://localhost:8089/versions
