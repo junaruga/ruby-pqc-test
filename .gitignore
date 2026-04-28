@@ -1,3 +1,4 @@
-/rubygems/build/*/*.gem
-/rubygems/server
+/rubygems/build/gem/*/*.gem
+/rubygems/build/ssl
 /rubygems/client
+/rubygems/server
