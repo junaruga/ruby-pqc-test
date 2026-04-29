@@ -22,6 +22,8 @@
 
 ## HTTPS
 
+### Direct HTTPS (WEBrick)
+
 The HTTPS server uses `script/run_ssl_server.rb` (WEBrick) instead of
 `openssl s_server` because `openssl s_server -WWW` does not handle HEAD
 requests. RubyGems uses HEAD requests in `gem install`.
@@ -44,7 +46,7 @@ requests. RubyGems uses HEAD requests in `gem install`.
    $ script/run_ssl_client.sh
    ```
 
-### Why not `openssl s_server`?
+#### Why not `openssl s_server`?
 
 Running the SSL server with `openssl s_server -WWW`:
 
@@ -66,3 +68,32 @@ $ script/run_ssl_client.sh
 + gem install hello-pqc --clear-sources -s https://localhost:8089/ -V
 HEAD https://localhost:8089/versions
 ```
+
+### TLS Reverse Proxy
+
+This setup uses a TLS reverse proxy in front of the HTTP RubyGems server.
+The proxy terminates TLS and forwards requests to the backend HTTP server.
+
+1. Set up the RubyGems server environment and generate SSL certificates.
+
+   ```
+   $ script/setup.sh
+   ```
+
+2. Run the RubyGems HTTP server.
+
+   ```
+   $ script/run_server.sh
+   ```
+
+3. Run the TLS reverse proxy server in another terminal.
+
+   ```
+   $ script/run_ssl_reverse_proxy.rb
+   ```
+
+4. Run the client in another terminal.
+
+   ```
+   $ script/run_ssl_client.sh -p 8443
+   ```
