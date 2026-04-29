@@ -9,7 +9,7 @@ GEM_HOME="${TEST_GEM_HOME}" \
 GEM_HOME="${TEST_GEM_HOME}" \
     gem install hello-pqc \
     --clear-sources \
-    -s http://127.0.0.1:8089/ \
+    -s http://127.0.0.1:18808/ \
     -V
 GEM_HOME="${TEST_GEM_HOME}" \
     gem list | grep hello-pqc

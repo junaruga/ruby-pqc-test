@@ -11,7 +11,7 @@ CERT_FILE = File.join(TOP_DIR, 'server', 'ssl', 'rsa.crt')
 KEY_FILE = File.join(TOP_DIR, 'server', 'ssl', 'rsa.key')
 
 server = WEBrick::HTTPServer.new(
-  Port: 8089,
+  Port: 18_443,
   BindAddress: '127.0.0.1',
   DocumentRoot: DOC_ROOT,
   SSLEnable: true,

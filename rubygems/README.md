@@ -11,20 +11,20 @@
 2. Run the RubyGems HTTP server.
 
    ```
-   $ script/run_server.sh
+   $ script/run_http_server.sh
    ```
 
 3. Run the client in another terminal.
 
    ```
-   $ script/run_client.sh
+   $ script/run_http_client.sh
    ```
 
 ## HTTPS
 
 ### Direct HTTPS (WEBrick)
 
-The HTTPS server uses `script/run_ssl_server.rb` (WEBrick) instead of
+The HTTPS server uses `script/run_https_server.rb` (WEBrick) instead of
 `openssl s_server` because `openssl s_server -WWW` does not handle HEAD
 requests. RubyGems uses HEAD requests in `gem install`.
 
@@ -37,13 +37,13 @@ requests. RubyGems uses HEAD requests in `gem install`.
 2. Run the RubyGems HTTPS server.
 
    ```
-   $ script/run_ssl_server.rb
+   $ script/run_https_server.rb
    ```
 
 3. Run the client in another terminal.
 
    ```
-   $ script/run_ssl_client.sh
+   $ script/run_https_client.sh
    ```
 
 #### Why not `openssl s_server`?
@@ -54,7 +54,7 @@ Running the SSL server with `openssl s_server -WWW`:
 $ cd server/gem
 
 $ openssl s_server \
-  -accept 127.0.0.1:8089 \
+  -accept 127.0.0.1:18443 \
   -cert ../ssl/rsa.crt \
   -key  ../ssl/rsa.key \
   -WWW
@@ -63,10 +63,10 @@ $ openssl s_server \
 The client script gets stuck at the HEAD request:
 
 ```
-$ script/run_ssl_client.sh
+$ script/run_https_client.sh
 ...
-+ gem install hello-pqc --clear-sources -s https://localhost:8089/ -V
-HEAD https://localhost:8089/versions
++ gem install hello-pqc --clear-sources -s https://localhost:18443/ -V
+HEAD https://localhost:18443/versions
 ```
 
 ### TLS Reverse Proxy
@@ -83,17 +83,17 @@ The proxy terminates TLS and forwards requests to the backend HTTP server.
 2. Run the RubyGems HTTP server.
 
    ```
-   $ script/run_server.sh
+   $ script/run_http_server.sh
    ```
 
 3. Run the TLS reverse proxy server in another terminal.
 
    ```
-   $ script/run_ssl_reverse_proxy.rb
+   $ script/run_https_reverse_proxy.rb
    ```
 
 4. Run the client in another terminal.
 
    ```
-   $ script/run_ssl_client.sh -p 8443
+   $ script/run_https_client.sh
    ```
