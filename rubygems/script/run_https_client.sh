@@ -4,11 +4,11 @@ set -eu -o pipefail
 
 usage() {
     echo "Usage: $(basename "${0}") [-p|--port PORT]"
-    echo "  -p, --port PORT  Port number (default: 8089)"
+    echo "  -p, --port PORT  Port number (default: 18443)"
     exit 1
 }
 
-PORT=8089
+PORT=18443
 
 while [[ "${#}" -gt 0 ]]; do
     case "${1}" in

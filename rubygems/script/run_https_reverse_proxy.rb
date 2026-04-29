@@ -9,11 +9,11 @@ require 'openssl'
 
 # Proxy server configuration
 LISTEN_HOST = '127.0.0.1'
-LISTEN_PORT = 8443
+LISTEN_PORT = 18_443
 
 # Backend HTTP server configuration
 BACKEND_HOST = '127.0.0.1'
-BACKEND_PORT = 8089
+BACKEND_PORT = 18_808
 
 # SSL certificate paths
 TOP_DIR = File.expand_path('..', __dir__)
