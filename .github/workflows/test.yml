@@ -1,0 +1,79 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rubygems-http:
+    name: rubygems HTTP server/client
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run HTTP server and client
+        run: |
+          script/run_http_server.sh &
+          sleep 3
+          script/run_http_client.sh
+
+  rubygems-https-direct:
+    name: rubygems HTTPS direct (WEBrick)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run HTTPS server and client
+        run: |
+          script/run_https_server.rb &
+          sleep 3
+          script/run_https_client.sh
+
+  rubygems-https-reverse-proxy:
+    name: rubygems HTTPS TLS reverse proxy
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run HTTP server, TLS proxy, and client
+        run: |
+          script/run_http_server.sh &
+          sleep 2
+          script/run_https_reverse_proxy.rb &
+          sleep 2
+          script/run_https_client.sh

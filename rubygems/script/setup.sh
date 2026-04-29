@@ -46,4 +46,8 @@ openssl req \
 cp "${TOP_DIR}"/build/ssl/rsa.{crt,key} "${TOP_DIR}/server/ssl/"
 cp "${TOP_DIR}/build/ssl/rsa.crt" "${TOP_DIR}/client/ssl/"
 
+# Install gems for RubyGems server
+gem install rubygems-server
+gem install webrick
+
 echo "OK"
