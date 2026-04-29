@@ -2,23 +2,28 @@
 
 ## HTTP
 
-1. Set up the RubyGems server environment.
+Set up the RubyGems server environment.
 
-   ```
-   $ script/setup.sh
-   ```
+```
+$ script/setup.sh
+```
 
-2. Run the RubyGems HTTP server.
+Run the RubyGems HTTP server.
 
-   ```
-   $ script/run_http_server.sh
-   ```
+```
+$ script/run_http_server.sh
+gem_dir: /home/jaruga/var/git/ruby-pqc-test/rubygems/server/gem
+Server started at http://0.0.0.0:18808
+Server started at http://[::]:18808
+```
 
-3. Run the client in another terminal.
+Run the client in another terminal.
 
-   ```
-   $ script/run_http_client.sh
-   ```
+```
+$ script/run_http_client.sh
+...
+OK
+```
 
 ## HTTPS
 
@@ -28,23 +33,27 @@ The HTTPS server uses `script/run_https_server.rb` (WEBrick) instead of
 `openssl s_server` because `openssl s_server -WWW` does not handle HEAD
 requests. RubyGems uses HEAD requests in `gem install`.
 
-1. Set up the RubyGems server environment and generate SSL certificates.
+Set up the RubyGems server environment and generate SSL certificates.
 
-   ```
-   $ script/setup.sh
-   ```
+```
+$ script/setup.sh
+```
 
-2. Run the RubyGems HTTPS server.
+Run the RubyGems HTTPS server.
 
-   ```
-   $ script/run_https_server.rb
-   ```
+```
+$ script/run_https_server.rb
+...
+[2026-04-29 14:30:23] INFO  WEBrick::HTTPServer#start: pid=1502425 port=18443
+```
 
-3. Run the client in another terminal.
+Run the client in another terminal.
 
-   ```
-   $ script/run_https_client.sh
-   ```
+```
+$ script/run_https_client.sh
+...
+OK
+```
 
 #### Why not `openssl s_server`?
 
@@ -74,26 +83,32 @@ HEAD https://localhost:18443/versions
 This setup uses a TLS reverse proxy in front of the HTTP RubyGems server.
 The proxy terminates TLS and forwards requests to the backend HTTP server.
 
-1. Set up the RubyGems server environment and generate SSL certificates.
+Set up the RubyGems server environment and generate SSL certificates.
 
-   ```
-   $ script/setup.sh
-   ```
+```
+$ script/setup.sh
+```
 
-2. Run the RubyGems HTTP server.
+Run the RubyGems HTTP server.
 
-   ```
-   $ script/run_http_server.sh
-   ```
+```
+$ script/run_http_server.sh
+gem_dir: /home/jaruga/var/git/ruby-pqc-test/rubygems/server/gem
+Server started at http://0.0.0.0:18808
+Server started at http://[::]:18808
+```
 
-3. Run the TLS reverse proxy server in another terminal.
+Run the TLS reverse proxy server in another terminal.
 
-   ```
-   $ script/run_https_reverse_proxy.rb
-   ```
+```
+$ script/run_https_reverse_proxy.rb
+TLS proxy: https://127.0.0.1:18443 -> http://127.0.0.1:18808
+```
 
-4. Run the client in another terminal.
+Run the client in another terminal.
 
-   ```
-   $ script/run_https_client.sh
-   ```
+```
+$ script/run_https_client.sh
+...
+OK
+```
