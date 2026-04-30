@@ -78,7 +78,7 @@ $ script/run_https_client.sh
 HEAD https://localhost:18443/versions
 ```
 
-### TLS Reverse Proxy
+### TLS Reverse Proxy (Ruby OpenSSL)
 
 This setup uses a TLS reverse proxy in front of the HTTP RubyGems server.
 The proxy terminates TLS and forwards requests to the backend HTTP server.
@@ -103,6 +103,41 @@ Run the TLS reverse proxy server in another terminal.
 ```
 $ script/run_https_reverse_proxy.rb
 TLS proxy: https://127.0.0.1:18443 -> http://127.0.0.1:18808
+```
+
+Run the client in another terminal.
+
+```
+$ script/run_https_client.sh
+...
+OK
+```
+
+### TLS Reverse Proxy (Nginx)
+
+This setup uses Nginx as a TLS reverse proxy in front of the HTTP RubyGems server.
+
+Set up the RubyGems server environment, generate SSL certificates, and test nginx configuration.
+
+```
+$ script/setup_nginx.sh
+```
+
+Run the RubyGems HTTP server.
+
+```
+$ script/run_http_server.sh
+gem_dir: /home/jaruga/var/git/ruby-pqc-test/rubygems/server/gem
+Server started at http://0.0.0.0:18808
+Server started at http://[::]:18808
+```
+
+Run the Nginx TLS reverse proxy server in another terminal.
+
+```
+$ script/run_https_reverse_proxy_nginx.sh
+TLS proxy (nginx): https://127.0.0.1:18443 -> http://127.0.0.1:18808
+...
 ```
 
 Run the client in another terminal.
