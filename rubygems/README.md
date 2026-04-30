@@ -1,4 +1,4 @@
-# RubyGems Server Test
+# RubyGems Test
 
 ## HTTP
 
