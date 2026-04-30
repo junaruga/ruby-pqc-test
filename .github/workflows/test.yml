@@ -53,8 +53,8 @@ jobs:
           sleep 3
           script/run_https_client.sh
 
-  rubygems-https-reverse-proxy:
-    name: rubygems HTTPS TLS reverse proxy
+  rubygems-https-reverse-proxy-ruby-openssl:
+    name: rubygems HTTPS TLS reverse proxy (Ruby OpenSSL)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -75,5 +75,30 @@ jobs:
           script/run_http_server.sh &
           sleep 2
           script/run_https_reverse_proxy.rb &
+          sleep 2
+          script/run_https_client.sh
+
+  rubygems-https-reverse-proxy-nginx:
+    name: rubygems HTTPS TLS reverse proxy (Nginx)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+
+      - name: Setup
+        run: script/setup_nginx.sh
+
+      - name: Run HTTP server, Nginx TLS proxy, and client
+        run: |
+          script/run_http_server.sh &
+          sleep 2
+          script/run_https_reverse_proxy_nginx.sh &
           sleep 2
           script/run_https_client.sh
