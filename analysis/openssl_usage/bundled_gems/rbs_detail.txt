@@ -1,0 +1,305 @@
+test/raap/openssl.rb:RaaP::Type.register('OpenSSL::BN') do
+test/raap/openssl.rb:    [:call, OpenSSL::BN, :new, [integer.pick(size: size)], {}, nil]
+test/raap/openssl.rb:  argv << "OpenSSL::BN##{instance_method}"
+test/stdlib/OpenSSL_test.rb:require "openssl"
+test/stdlib/OpenSSL_test.rb:module OpenSSL::TestUtils
+test/stdlib/OpenSSL_test.rb:    return false if OpenSSL::OPENSSL_VERSION.include?("LibreSSL")
+test/stdlib/OpenSSL_test.rb:    OpenSSL::OPENSSL_VERSION_NUMBER >=
+test/stdlib/OpenSSL_test.rb:class OpenSSLSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL)"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> singleton(::OpenSSL::Digest)",
+test/stdlib/OpenSSL_test.rb:                     OpenSSL, :Digest, "MD5"
+test/stdlib/OpenSSL_test.rb:                     OpenSSL, :debug
+test/stdlib/OpenSSL_test.rb:                     OpenSSL, :errors
+test/stdlib/OpenSSL_test.rb:                     OpenSSL, :fips_mode
+test/stdlib/OpenSSL_test.rb:                     OpenSSL, :fixed_length_secure_compare, "a", "a"
+test/stdlib/OpenSSL_test.rb:  end if OpenSSL.respond_to?(:fixed_length_secure_compare)
+test/stdlib/OpenSSL_test.rb:                     OpenSSL, :secure_compare, "a", "a"
+test/stdlib/OpenSSL_test.rb:  end if OpenSSL.respond_to?(:secure_compare)
+test/stdlib/OpenSSL_test.rb:class OpenSSLASN1SingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::ASN1)"
+test/stdlib/OpenSSL_test.rb:      assert_send_type "(String) -> OpenSSL::ASN1::#{type}",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::ASN1, type, "bang"
+test/stdlib/OpenSSL_test.rb:      assert_send_type "(String, ::Integer) -> OpenSSL::ASN1::#{type}",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::ASN1, type, "bang", 2
+test/stdlib/OpenSSL_test.rb:      assert_send_type "(String, ::Integer, Symbol) -> OpenSSL::ASN1::#{type}",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::ASN1, type, "bang", 2, :IMPLICIT
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::String) -> OpenSSL::ASN1::ObjectId",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :ObjectId, "1.2"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::String, ::Integer) -> OpenSSL::ASN1::ObjectId",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :ObjectId, "1.2", 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::String, ::Integer, Symbol) -> OpenSSL::ASN1::ObjectId",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :ObjectId, "1.2", 2, :IMPLICIT
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(bool) -> OpenSSL::ASN1::Boolean",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Boolean, true
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(bool, ::Integer) -> OpenSSL::ASN1::Boolean",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Boolean, true, 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(bool, ::Integer, Symbol) -> OpenSSL::ASN1::Boolean",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Boolean, true, 2, :IMPLICIT
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::ASN1::EndOfContent",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :EndOfContent
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Integer) -> OpenSSL::ASN1::Integer",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Integer, 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Integer, ::Integer) -> OpenSSL::ASN1::Integer",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Integer, 2, 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Integer, ::Integer, Symbol) -> OpenSSL::ASN1::Integer",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Integer, 2, 2, :IMPLICIT
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Integer) -> OpenSSL::ASN1::Enumerated",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Enumerated, 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Integer, ::Integer) -> OpenSSL::ASN1::Enumerated",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Enumerated, 2, 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Integer, ::Integer, Symbol) -> OpenSSL::ASN1::Enumerated",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Enumerated, 2, 2, :IMPLICIT
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Time) -> OpenSSL::ASN1::GeneralizedTime",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :GeneralizedTime, Time.now
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Time, ::Integer) -> OpenSSL::ASN1::GeneralizedTime",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :GeneralizedTime, Time.now, 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Time, ::Integer, Symbol) -> OpenSSL::ASN1::GeneralizedTime",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :GeneralizedTime, Time.now, 2, :IMPLICIT
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Time) -> OpenSSL::ASN1::UTCTime",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :UTCTime, Time.now
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Time, ::Integer) -> OpenSSL::ASN1::UTCTime",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :UTCTime, Time.now, 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Time, ::Integer, Symbol) -> OpenSSL::ASN1::UTCTime",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :UTCTime, Time.now, 2, :IMPLICIT
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(nil) -> OpenSSL::ASN1::Null",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Null, nil
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Array[OpenSSL::ASN1::ASN1Data]) -> OpenSSL::ASN1::Sequence",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Sequence, [OpenSSL::ASN1::Null(nil)]
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Array[OpenSSL::ASN1::ASN1Data], ::Integer) -> OpenSSL::ASN1::Sequence",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Sequence, [OpenSSL::ASN1::Null(nil)], 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Array[OpenSSL::ASN1::ASN1Data], ::Integer, Symbol) -> OpenSSL::ASN1::Sequence",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Sequence, [OpenSSL::ASN1::Null(nil)], 2, :IMPLICIT
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Array[OpenSSL::ASN1::ASN1Data]) -> OpenSSL::ASN1::Set",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Set, [OpenSSL::ASN1::Null(nil)]
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Array[OpenSSL::ASN1::ASN1Data], ::Integer) -> OpenSSL::ASN1::Set",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Set, [OpenSSL::ASN1::Null(nil)], 2
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Array[OpenSSL::ASN1::ASN1Data], ::Integer, Symbol) -> OpenSSL::ASN1::Set",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :Set, [OpenSSL::ASN1::Null(nil)], 2, :IMPLICIT
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::ASN1::ASN1Data",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :decode, der
+test/stdlib/OpenSSL_test.rb:    # assert_send_type "(_ToDer) -> OpenSSL::ASN1::ASN1Data",
+test/stdlib/OpenSSL_test.rb:    # OpenSSL::ASN1, :decode, Class.new { def to_der; der; end }
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> Array[OpenSSL::ASN1::ASN1Data]",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1, :decode_all, der
+test/stdlib/OpenSSL_test.rb:    # assert_send_type "(_ToDer) -> Array[OpenSSL::ASN1::ASN1Data]",
+test/stdlib/OpenSSL_test.rb:    # OpenSSL::ASN1, :decode, Class.new { def to_der; der; end }
+test/stdlib/OpenSSL_test.rb:      OpenSSL::ASN1, :traverse, der, &proc { }
+test/stdlib/OpenSSL_test.rb:class OpenSSLASN1ASN1DataTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::ASN1::ASN1Data"
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1::ASN1Data.new(2, 2, :UNIVERSAL), :indefinite_length
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1::ASN1Data.new(2, 2, :UNIVERSAL), :indefinite_length=, true
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1::ASN1Data.new(2, 2, :UNIVERSAL), :tag
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1::ASN1Data.new(2, OpenSSL::BN.new(2), :UNIVERSAL), :tag
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1::ASN1Data.new(2, 2, :UNIVERSAL), :tag=, 3
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(OpenSSL::BN) -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1::ASN1Data.new(2, OpenSSL::BN.new(2), :UNIVERSAL), :tag=, OpenSSL::BN.new(3)
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1::ASN1Data.new(2, 2, :UNIVERSAL), :tag_class
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1::ASN1Data.new(2, OpenSSL::BN.new(2), :UNIVERSAL), :tag_class=, :CONTEXT_SPECIFIC
+test/stdlib/OpenSSL_test.rb:    OpenSSL::ASN1::ASN1Data.new("2", 2, :UNIVERSAL), :to_der
+test/stdlib/OpenSSL_test.rb:class OpenSSLBNSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::BN)"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::Integer) -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::BN, :generate_prime, 3
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(::OpenSSL::BN) -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::BN, :new, OpenSSL::BN.new(3)
+test/stdlib/OpenSSL_test.rb:class OpenSSLBNTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::BN"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(OpenSSL::BN) -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:                     OpenSSL::BN.new(3), :mod_inverse, OpenSSL::BN.new(5)
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Integer) -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:                     OpenSSL::BN.new(3), :mod_inverse, 5
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Integer) -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:                     OpenSSL::BN.new(3), :<<, 1
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(_ToInt) -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:                     OpenSSL::BN.new(3), :<<, ToInt.new(1)
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Integer) -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:                     OpenSSL::BN.new(3), :>>, 1
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(_ToInt) -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:                     OpenSSL::BN.new(3), :>>, ToInt.new(1)
+test/stdlib/OpenSSL_test.rb:class OpenSSLCipherSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::Cipher)"
+test/stdlib/OpenSSL_test.rb:      OpenSSL::Cipher, :ciphers
+test/stdlib/OpenSSL_test.rb:class OpenSSLCipherTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::Cipher"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::Cipher",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::Cipher.new(algo).tap do |cipher|
+test/stdlib/OpenSSL_test.rb:      assert_send_type "() -> OpenSSL::Cipher",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::Cipher.new(algo).tap do |cipher|
+test/stdlib/OpenSSL_test.rb:      assert_send_type "() -> OpenSSL::Cipher",
+test/stdlib/OpenSSL_test.rb:class OpenSSLConfigSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::Config)"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::Config",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::Config, :load
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::Config",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::Config, :load, OpenSSL::Config::DEFAULT_CONFIG_FILE
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::Config",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::Config, :parse, File.read(OpenSSL::Config::DEFAULT_CONFIG_FILE)
+test/stdlib/OpenSSL_test.rb:      OpenSSL::Config, :parse_config, File.open(OpenSSL::Config::DEFAULT_CONFIG_FILE)
+test/stdlib/OpenSSL_test.rb:class OpenSSLConfigTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::Config"
+test/stdlib/OpenSSL_test.rb:      "() { ([String, String, String]) -> void } -> OpenSSL::Config",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::Config.load(OpenSSL::Config::DEFAULT_CONFIG_FILE)
+test/stdlib/OpenSSL_test.rb:class OpenSSLDigestSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::Digest)"
+test/stdlib/OpenSSL_test.rb:      OpenSSL::Digest, :digest, "SHA256", "abc"
+test/stdlib/OpenSSL_test.rb:class OpenSSLDigestTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::Digest"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::Digest",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::Digest",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::Digest.new("sha256")
+test/stdlib/OpenSSL_test.rb:class OpenSSLEngineSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::Engine)"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::Engine",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::Engine, :by_id, "openssl"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> Array[OpenSSL::Engine]",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::Engine, :engines
+test/stdlib/OpenSSL_test.rb:end if defined?(OpenSSL::Engine)
+test/stdlib/OpenSSL_test.rb:class OpenSSLEngineTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::Engine"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::Cipher",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::Digest",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::Engine.by_id("openssl")
+test/stdlib/OpenSSL_test.rb:end if defined?(OpenSSL::Engine)
+test/stdlib/OpenSSL_test.rb:class OpenSSLHMACSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::HMAC)"
+test/stdlib/OpenSSL_test.rb:      OpenSSL::HMAC, :digest, "SHA256", "key", "data"
+test/stdlib/OpenSSL_test.rb:      OpenSSL::HMAC, :hexdigest, "SHA256", "key", "data"
+test/stdlib/OpenSSL_test.rb:      OpenSSL::HMAC, :base64digest, "SHA256", "key", "data"
+test/stdlib/OpenSSL_test.rb:class OpenSSLHMACTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::HMAC"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::HMAC",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::HMAC",
+test/stdlib/OpenSSL_test.rb:    digest = OpenSSL::Digest.new('SHA256')
+test/stdlib/OpenSSL_test.rb:    OpenSSL::HMAC.new("key", digest)
+test/stdlib/OpenSSL_test.rb:class OpenSSLKDFSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::KDF)"
+test/stdlib/OpenSSL_test.rb:      OpenSSL::KDF, :hkdf, ikm, salt: salt, info: info, length: l, hash: hash
+test/stdlib/OpenSSL_test.rb:      OpenSSL::KDF, :pbkdf2_hmac, p, salt: s, iterations: c, length: dk_len, hash: "sha1"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String, salt: String, iterations: Integer, length: Integer, hash: OpenSSL::Digest) -> String",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::KDF, :pbkdf2_hmac, p, salt: s, iterations: c, length: dk_len, hash: OpenSSL::Digest::SHA1.new
+test/stdlib/OpenSSL_test.rb:      OpenSSL::KDF, :scrypt, pass, salt: salt, N: n, r: r, p: p, length: dklen
+test/stdlib/OpenSSL_test.rb:class OpenSSLNetscapePKITest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::Netscape::SPKI"
+test/stdlib/OpenSSL_test.rb:    key = OpenSSL::PKey::RSA.new 2048
+test/stdlib/OpenSSL_test.rb:    spki = OpenSSL::Netscape::SPKI.new
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(OpenSSL::PKey::PKey) -> OpenSSL::PKey::PKey",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(OpenSSL::PKey::PKey, OpenSSL::Digest) -> OpenSSL::Netscape::SPKI",
+test/stdlib/OpenSSL_test.rb:      spki, :sign, key, OpenSSL::Digest::SHA256.new
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::PKey::PKey",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(OpenSSL::PKey::PKey) -> bool",
+test/stdlib/OpenSSL_test.rb:class OpenSSLOCSPBasicResponsePKITest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::OCSP::BasicResponse"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::OCSP::BasicResponse",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::OCSP::BasicResponse.new
+test/stdlib/OpenSSL_test.rb:class OpenSSLPKeySingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::PKey)"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::PKey::PKey",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::PKey, :read, pem
+test/stdlib/OpenSSL_test.rb:      assert_send_type "(IO) -> OpenSSL::PKey::PKey",
+test/stdlib/OpenSSL_test.rb:        OpenSSL::PKey, :read, rd
+test/stdlib/OpenSSL_test.rb:    OpenSSL::PKey::RSA.new(2048).to_pem
+test/stdlib/OpenSSL_test.rb:class OpenSSLDHTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::PKey::DH"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> Hash[String, OpenSSL::BN?]",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::PKey::DH",
+test/stdlib/OpenSSL_test.rb:    return if OpenSSL::TestUtils.openssl?(3, 0, 0)
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Integer, nil) -> OpenSSL::PKey::DH",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Integer, Integer) -> OpenSSL::PKey::DH",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::PKey::DH.new(512)
+test/stdlib/OpenSSL_test.rb:class OpenSSLDSATest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::PKey::DSA"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::BN?",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::BN?",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::BN?",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> Hash[String, OpenSSL::BN]",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::PKey::DSA",
+test/stdlib/OpenSSL_test.rb:    return if OpenSSL::TestUtils.openssl?(3, 0, 0)
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Integer, nil) -> OpenSSL::PKey::DSA",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Integer, Integer) -> OpenSSL::PKey::DSA",
+test/stdlib/OpenSSL_test.rb:    digest = OpenSSL::Digest::SHA1.digest(doc)
+test/stdlib/OpenSSL_test.rb:    OpenSSL::PKey::DSA.new(1024)
+test/stdlib/OpenSSL_test.rb:class OpenSSLECSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::PKey::EC)"
+test/stdlib/OpenSSL_test.rb:      OpenSSL::PKey::EC, :builtin_curves
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::PKey::EC",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::PKey::EC, :generate, "prime256v1"
+test/stdlib/OpenSSL_test.rb:class OpenSSLECTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::PKey::EC"
+test/stdlib/OpenSSL_test.rb:      "(OpenSSL::PKey::EC::Point) -> String",
+test/stdlib/OpenSSL_test.rb:      pkey, :dh_compute_key, OpenSSL::PKey::EC.generate("prime256v1").public_key
+test/stdlib/OpenSSL_test.rb:    key = OpenSSL::PKey::EC.new("prime256v1")
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::PKey::EC::Group",
+test/stdlib/OpenSSL_test.rb:    ec = OpenSSL::PKey::EC.new("prime256v1")
+test/stdlib/OpenSSL_test.rb:    return if OpenSSL::TestUtils.openssl?(3, 0, 0)
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::PKey::EC",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::BN",
+test/stdlib/OpenSSL_test.rb:    ec = OpenSSL::PKey::EC.new("prime256v1")
+test/stdlib/OpenSSL_test.rb:    return if OpenSSL::TestUtils.openssl?(3, 0, 0)
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::PKey::EC",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::PKey::EC::Point",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::PKey::EC.generate("prime256v1")
+test/stdlib/OpenSSL_test.rb:class OpenSSLRSATest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::PKey::RSA"
+test/stdlib/OpenSSL_test.rb:  end if OpenSSL::PKey::RSA.method_defined?(:oid)
+test/stdlib/OpenSSL_test.rb:  end if OpenSSL::PKey::RSA.method_defined?(:private_to_der)
+test/stdlib/OpenSSL_test.rb:  end if OpenSSL::PKey::RSA.method_defined?(:private_to_pem)
+test/stdlib/OpenSSL_test.rb:  end if OpenSSL::PKey::RSA.method_defined?(:public_to_der)
+test/stdlib/OpenSSL_test.rb:  end if OpenSSL::PKey::RSA.method_defined?(:public_to_pem)
+test/stdlib/OpenSSL_test.rb:    digest = OpenSSL::Digest::SHA256.new
+test/stdlib/OpenSSL_test.rb:    sig = assert_send_type "(OpenSSL::Digest, String) -> String",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(OpenSSL::Digest, String, String) -> bool",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> Hash[String, OpenSSL::BN]",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::PKey::RSA.new(2048)
+test/stdlib/OpenSSL_test.rb:class OpenSSLRandomSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::Random)"
+test/stdlib/OpenSSL_test.rb:      OpenSSL::Random, :random_bytes, 4
+test/stdlib/OpenSSL_test.rb:class OpenSSLSSLSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::SSL)"
+test/stdlib/OpenSSL_test.rb:    OpenSSL::SSL, :verify_hostname, "www.example.com", "*.example.com"
+test/stdlib/OpenSSL_test.rb:    OpenSSL::SSL, :verify_wildcard, "foo", "x*"
+test/stdlib/OpenSSL_test.rb:class OpenSSLTimestampFactoryTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::Timestamp::Factory"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(Array[OpenSSL::X509::Certificate]) -> Array[OpenSSL::X509::Certificate]",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> Array[OpenSSL::X509::Certificate]",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::Timestamp::Factory.new
+test/stdlib/OpenSSL_test.rb:    OpenSSL::X509::Certificate.new
+test/stdlib/OpenSSL_test.rb:end if OpenSSL.const_defined?(:Timestamp)
+test/stdlib/OpenSSL_test.rb:class OpenSSLX509AttributeTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::X509::Attribute"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::ASN1::Set",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(OpenSSL::ASN1::Set) -> OpenSSL::ASN1::Set",
+test/stdlib/OpenSSL_test.rb:      attribute, :value=, OpenSSL::ASN1::Set.new([OpenSSL::ASN1::UTF8String("abc123")])
+test/stdlib/OpenSSL_test.rb:    OpenSSL::X509::Attribute.new(test_der)
+test/stdlib/OpenSSL_test.rb:class OpenSSLX509CertificateTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::X509::Certificate"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::X509::Name",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::X509::Name",
+test/stdlib/OpenSSL_test.rb:    assert_send_type "() -> OpenSSL::PKey::PKey",
+test/stdlib/OpenSSL_test.rb:    key = OpenSSL::PKey::RSA.new 2048
+test/stdlib/OpenSSL_test.rb:    cert = OpenSSL::X509::Certificate.new
+test/stdlib/OpenSSL_test.rb:class OpenSSLX509ExtensionTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::X509::Extension"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(OpenSSL::ASN1::Set) -> String",
+test/stdlib/OpenSSL_test.rb:      extension, :value=, OpenSSL::ASN1::Set.new([OpenSSL::ASN1::UTF8String("abc123")])
+test/stdlib/OpenSSL_test.rb:    basic_constraints_value = OpenSSL::ASN1::Sequence([
+test/stdlib/OpenSSL_test.rb:      OpenSSL::ASN1::Boolean(true),   # CA
+test/stdlib/OpenSSL_test.rb:      OpenSSL::ASN1::Integer(2)       # pathlen
+test/stdlib/OpenSSL_test.rb:    basic_constraints = OpenSSL::ASN1::Sequence([
+test/stdlib/OpenSSL_test.rb:      OpenSSL::ASN1::ObjectId("basicConstraints"),
+test/stdlib/OpenSSL_test.rb:      OpenSSL::ASN1::Boolean(true),
+test/stdlib/OpenSSL_test.rb:      OpenSSL::ASN1::OctetString(basic_constraints_value.to_der),
+test/stdlib/OpenSSL_test.rb:    OpenSSL::X509::Extension.new(basic_constraints.to_der)
+test/stdlib/OpenSSL_test.rb:class OpenSSLX509NameSingletonTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "singleton(::OpenSSL::X509::Name)"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String) -> OpenSSL::X509::Name",
+test/stdlib/OpenSSL_test.rb:      OpenSSL::X509::Name, :parse, "/CN=nobody/DC=example"
+test/stdlib/OpenSSL_test.rb:class OpenSSLX509NameTest < Test::Unit::TestCase
+test/stdlib/OpenSSL_test.rb:  testing "::OpenSSL::X509::Name"
+test/stdlib/OpenSSL_test.rb:    assert_send_type "(String, String) -> OpenSSL::X509::Name",
+test/stdlib/OpenSSL_test.rb:    OpenSSL::X509::Name.parse('/CN=nobody/DC=example')

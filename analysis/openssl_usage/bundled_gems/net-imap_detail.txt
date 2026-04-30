@@ -1,0 +1,72 @@
+test/net/imap/test_imap_deprecated_client_options.rb:              {ca_file: certs, verify_mode: OpenSSL::SSL::VERIFY_PEER},
+test/net/imap/test_imap_deprecated_client_options.rb:              {verify_mode: OpenSSL::SSL::VERIFY_NONE},
+test/net/imap/test_imap_deprecated_client_options.rb:            assert_equal OpenSSL::SSL::VERIFY_NONE, client.ssl_ctx.verify_mode
+test/net/imap/test_imap_deprecated_client_options.rb:            verify_mode: OpenSSL::SSL::VERIFY_NONE,
+test/net/imap/test_imap_capabilities.rb:  if defined?(OpenSSL::SSL::SSLError)
+test/net/imap/test_imap_inspect.rb:      imap.starttls verify_mode: OpenSSL::SSL::VERIFY_NONE
+test/net/imap/test_imap.rb:  if defined?(OpenSSL::SSL::SSLError)
+test/net/imap/test_imap.rb:      assert_raise(OpenSSL::SSL::SSLError) do
+test/net/imap/test_imap.rb:        rescue OpenSSL::SSL::SSLError => e
+test/net/imap/test_imap.rb:      assert_equal(OpenSSL::SSL::VERIFY_PEER, imap.ssl_ctx.verify_mode)
+test/net/imap/test_imap.rb:              ssl: { :verify_mode => OpenSSL::SSL::VERIFY_NONE }
+test/net/imap/test_imap.rb:        rescue OpenSSL::SSL::SSLError => e
+test/net/imap/test_imap.rb:      assert_equal({verify_mode: OpenSSL::SSL::VERIFY_NONE},
+test/net/imap/test_imap.rb:      assert_equal(OpenSSL::SSL::VERIFY_NONE, imap.ssl_ctx.verify_mode)
+test/net/imap/test_imap.rb:      assert_raise(OpenSSL::SSL::SSLError) do
+test/net/imap/test_imap.rb:  if defined?(OpenSSL::SSL)
+test/net/imap/test_imap.rb:      assert_kind_of(OpenSSL::SSL::SSLError, ex)
+test/net/imap/test_imap.rb:      assert_equal(OpenSSL::SSL::VERIFY_PEER, imap.ssl_ctx.verify_mode)
+test/net/imap/test_imap.rb:      assert_equal(OpenSSL::SSL::VERIFY_PEER, imap.ssl_ctx.verify_mode)
+test/net/imap/test_imap.rb:      assert_equal(OpenSSL::SSL::VERIFY_PEER, imap.ssl_ctx.verify_mode)
+test/net/imap/test_imap.rb:      ctx = OpenSSL::SSL::SSLContext.new
+test/net/imap/test_imap.rb:        OpenSSL::PKey::RSA.new(f)
+test/net/imap/test_imap.rb:        OpenSSL::X509::Certificate.new(f)
+test/net/imap/test_imap.rb:      ssl_server = OpenSSL::SSL::SSLServer.new(server, ctx)
+test/net/imap/test_imap.rb:        ctx = OpenSSL::SSL::SSLContext.new
+test/net/imap/test_imap.rb:          OpenSSL::PKey::RSA.new(f)
+test/net/imap/test_imap.rb:          OpenSSL::X509::Certificate.new(f)
+test/net/imap/test_imap.rb:        sock = OpenSSL::SSL::SSLSocket.new(sock, ctx)
+test/net/imap/test_imap.rb:      rescue OpenSSL::SSL::SSLError
+test/net/imap/fake_server/socket.rb:      @tls_socket ||= OpenSSL::SSL::SSLSocket.new(tcp_socket, ssl_ctx).tap do |s|
+test/net/imap/fake_server/socket.rb:      @ssl_ctx ||= OpenSSL::SSL::SSLContext.new.tap do |ctx|
+test/net/imap/fake_server/socket.rb:        ctx.key  = OpenSSL::PKey::RSA.new         File.read config.tls.fetch :key
+test/net/imap/fake_server/socket.rb:        ctx.cert = OpenSSL::X509::Certificate.new File.read config.tls.fetch :cert
+lib/net/imap.rb:  require "openssl"
+lib/net/imap.rb:    # {SSLContext}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html]
+lib/net/imap.rb:    # {set_params}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html#method-i-set_params]
+lib/net/imap.rb:    #   {OpenSSL::SSL::SSLContext#set_params}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html#method-i-set_params].
+lib/net/imap.rb:    #   {OpenSSL::SSL::SSLContext#set_params}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html#method-i-set_params];
+lib/net/imap.rb:    #   SSLContext[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html].  For example:
+lib/net/imap.rb:    #   [{ca_file}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html#attribute-i-ca_file]]
+lib/net/imap.rb:    #   [{ca_path}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html#attribute-i-ca_path]]
+lib/net/imap.rb:    #   [{min_version}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html#method-i-min_version-3D]]
+lib/net/imap.rb:    #     an +OpenSSL+ constant such as +OpenSSL::SSL::TLS1_2_VERSION+,
+lib/net/imap.rb:    #   [{verify_mode}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html#attribute-i-verify_mode]]
+lib/net/imap.rb:    #     +OpenSSL::SSL::VERIFY_PEER+ and +OpenSSL::SSL::VERIFY_NONE+.
+lib/net/imap.rb:    #   See {OpenSSL::SSL::SSLContext}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html] for other valid SSL context params.
+lib/net/imap.rb:    #     cert: OpenSSL::X509::Certificate.new(File.read("client.crt")),
+lib/net/imap.rb:    #     key:  OpenSSL::PKey::EC.new(File.read('client.key')),
+lib/net/imap.rb:    #       OpenSSL::X509::Certificate.new(File.read("intermediate.crt")),
+lib/net/imap.rb:    # {OpenSSL::SSL::SSLContext#set_params}[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html#method-i-set_params];
+lib/net/imap.rb:    # SSLContext[https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html].
+lib/net/imap.rb:    #     OpenSSL::Digest.
+lib/net/imap.rb:        context = OpenSSL::SSL::SSLContext.new
+lib/net/imap.rb:      raise "SSL extension not installed" unless defined?(OpenSSL::SSL)
+lib/net/imap.rb:      raise "already using SSL" if @sock.kind_of?(OpenSSL::SSL::SSLSocket)
+lib/net/imap.rb:      @sock = OpenSSL::SSL::SSLSocket.new(@sock, ssl_ctx)
+lib/net/imap.rb:      if ssl_ctx.verify_mode != OpenSSL::SSL::VERIFY_NONE
+lib/net/imap/deprecated_client_options.rb:      # OpenSSL::SSL::VERIFY_NONE</tt>.
+lib/net/imap/deprecated_client_options.rb:      #     Net::IMAP.new("imap.example.com", ssl: {verify_mode: OpenSSL::SSL::VERIFY_NONE})
+lib/net/imap/deprecated_client_options.rb:          verify ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
+lib/net/imap/sasl.rb:    #     OpenSSL::Digest.
+lib/net/imap/sasl/scram_authenticator.rb:require "openssl"
+lib/net/imap/sasl/scram_authenticator.rb:      # OpenSSL::Digest[https://ruby.github.io/openssl/OpenSSL/Digest.html].
+lib/net/imap/sasl/scram_authenticator.rb:        # Note that <tt>OpenSSL::KDF.pbkdf2_hmac</tt> is implemented by a
+lib/net/imap/sasl/scram_authenticator.rb:        # safe value, depending on hardware and version of OpenSSL.  <em>It is
+lib/net/imap/sasl/scram_authenticator.rb:        # Returns a new OpenSSL::Digest object, set to the appropriate hash
+lib/net/imap/sasl/scram_authenticator.rb:        # algorithm supported by OpenSSL::Digest.</em>
+lib/net/imap/sasl/scram_authenticator.rb:        def digest; OpenSSL::Digest.new self.class::DIGEST_NAME end
+lib/net/imap/sasl/scram_authenticator.rb:      # Uses the "SHA-1" digest algorithm from OpenSSL::Digest.
+lib/net/imap/sasl/scram_authenticator.rb:      # Uses the "SHA-256" digest algorithm from OpenSSL::Digest.
+lib/net/imap/sasl/scram_algorithm.rb:          OpenSSL::KDF.pbkdf2_hmac(
+lib/net/imap/sasl/scram_algorithm.rb:        def HMAC(key, data) OpenSSL::HMAC.digest(digest, key, data) end

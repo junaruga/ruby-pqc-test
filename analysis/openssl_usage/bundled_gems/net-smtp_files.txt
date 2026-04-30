@@ -1,0 +1,5 @@
+lib/net/smtp/auth_cram_md5.rb
+lib/net/smtp.rb
+test/net/smtp/test_smtp.rb
+test/net/smtp/test_sslcontext.rb
+test/net/smtp/test_starttls.rb

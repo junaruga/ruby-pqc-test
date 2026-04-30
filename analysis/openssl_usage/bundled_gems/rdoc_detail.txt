@@ -1,0 +1,1 @@
+test/rdoc/parser/prism_ruby_test.rb:          # This class definition is used in OpenSSL::Cipher::Cipher
