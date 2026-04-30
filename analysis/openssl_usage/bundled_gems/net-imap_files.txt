@@ -1,0 +1,10 @@
+lib/net/imap/deprecated_client_options.rb
+lib/net/imap.rb
+lib/net/imap/sasl.rb
+lib/net/imap/sasl/scram_algorithm.rb
+lib/net/imap/sasl/scram_authenticator.rb
+test/net/imap/fake_server/socket.rb
+test/net/imap/test_imap_capabilities.rb
+test/net/imap/test_imap_deprecated_client_options.rb
+test/net/imap/test_imap_inspect.rb
+test/net/imap/test_imap.rb

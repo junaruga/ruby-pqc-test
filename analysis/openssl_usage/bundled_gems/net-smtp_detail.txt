@@ -1,0 +1,63 @@
+test/net/smtp/test_starttls.rb:unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_sslcontext.rb:unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_sslcontext.rb:      store = OpenSSL::X509::Store.new
+test/net/smtp/test_sslcontext.rb:      ctx = OpenSSL::SSL::SSLContext.new
+test/net/smtp/test_sslcontext.rb:        OpenSSL::X509::Certificate.new(File.read(SERVER_CERT)),
+test/net/smtp/test_sslcontext.rb:        OpenSSL::PKey.read(File.read(SERVER_KEY)),
+test/net/smtp/test_sslcontext.rb:        [OpenSSL::X509::Certificate.new(File.read(CA_FILE))])
+test/net/smtp/test_sslcontext.rb:      sock = OpenSSL::SSL::SSLSocket.new(sock, ctx)
+test/net/smtp/test_sslcontext.rb:    rescue OpenSSL::SSL::SSLError
+test/net/smtp/test_sslcontext.rb:      assert_raise(OpenSSL::SSL::SSLError) { smtp.start }
+test/net/smtp/test_sslcontext.rb:      assert_equal(OpenSSL::X509::V_ERR_SELF_SIGNED_CERT_IN_CHAIN, smtp.__ssl_socket.verify_result)
+test/net/smtp/test_sslcontext.rb:      assert_equal(OpenSSL::SSL::VERIFY_PEER, smtp.__ssl_context.verify_mode)
+test/net/smtp/test_sslcontext.rb:      assert_raise(OpenSSL::SSL::SSLError) { smtp.start }
+test/net/smtp/test_sslcontext.rb:      assert_raise(OpenSSL::SSL::SSLError) { smtp.start }
+test/net/smtp/test_sslcontext.rb:      assert_equal(OpenSSL::X509::V_ERR_SELF_SIGNED_CERT_IN_CHAIN, smtp.__ssl_socket.verify_result)
+test/net/smtp/test_sslcontext.rb:      assert_equal(OpenSSL::SSL::VERIFY_PEER, smtp.__ssl_context.verify_mode)
+test/net/smtp/test_sslcontext.rb:      assert_equal(OpenSSL::SSL::VERIFY_NONE, smtp.__ssl_context.verify_mode)
+test/net/smtp/test_sslcontext.rb:      assert_raise(OpenSSL::SSL::SSLError) { smtp.start }
+test/net/smtp/test_sslcontext.rb:      assert_equal(OpenSSL::X509::V_ERR_SELF_SIGNED_CERT_IN_CHAIN, smtp.__ssl_socket.verify_result)
+test/net/smtp/test_sslcontext.rb:      assert_equal(OpenSSL::SSL::VERIFY_PEER, smtp.__ssl_context.verify_mode)
+test/net/smtp/test_sslcontext.rb:      assert_equal(OpenSSL::SSL::VERIFY_NONE, smtp.__ssl_context.verify_mode)
+test/net/smtp/test_sslcontext.rb:      assert_raise(OpenSSL::SSL::SSLError) { smtp.start }
+test/net/smtp/test_sslcontext.rb:      # TODO: Not all OpenSSL versions have the same verify_result code
+test/net/smtp/test_sslcontext.rb:      assert_raise(OpenSSL::SSL::SSLError) { smtp.start }
+test/net/smtp/test_sslcontext.rb:      # TODO: Not all OpenSSL versions have the same verify_result code
+test/net/smtp/test_sslcontext.rb:      smtp = MySMTP.new(start_smtpd_starttls, ssl_context_params: {timeout: 123, verify_mode: OpenSSL::SSL::VERIFY_NONE})
+test/net/smtp/test_sslcontext.rb:      smtp.ssl_context_params = {timeout: 123, verify_mode: OpenSSL::SSL::VERIFY_NONE}
+test/net/smtp/test_smtp.rb:      if defined? OpenSSL
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl library not loaded" unless defined?(OpenSSL::VERSION)
+test/net/smtp/test_smtp.rb:      omit "openssl or digest library not loaded" unless defined? OpenSSL or defined? Digest
+test/net/smtp/test_smtp.rb:      ctx = OpenSSL::SSL::SSLContext.new
+test/net/smtp/test_smtp.rb:      ctx.key = File.open(SERVER_KEY){|f| OpenSSL::PKey::RSA.new(f)}
+test/net/smtp/test_smtp.rb:      ctx.cert = File.open(SERVER_CERT){|f| OpenSSL::X509::Certificate.new(f)}
+test/net/smtp/test_smtp.rb:      OpenSSL::SSL::SSLSocket.new(@sock, ctx)
+lib/net/smtp/auth_cram_md5.rb:unless defined? OpenSSL
+lib/net/smtp/auth_cram_md5.rb:      @digest_class ||= if defined?(OpenSSL::Digest)
+lib/net/smtp/auth_cram_md5.rb:                          OpenSSL::Digest
+lib/net/smtp.rb:  require 'openssl'
+lib/net/smtp.rb:      context = OpenSSL::SSL::SSLContext.new
+lib/net/smtp.rb:    # Additional SSLContext[https://ruby.github.io/openssl/OpenSSL/SSL/SSLContext.html]
+lib/net/smtp.rb:    # passed to {OpenSSL::SSL::SSLContext#set_params}[https://ruby.github.io/openssl/OpenSSL/SSL/SSLContext.html#method-i-set_params].
+lib/net/smtp.rb:    # verify_mode: OpenSSL::SSL::VERIFY_PEER }</tt>.
+lib/net/smtp.rb:    # to have any effect.  +context+ is a OpenSSL::SSL::SSLContext object.
+lib/net/smtp.rb:      raise 'openssl library not installed' unless defined?(OpenSSL::VERSION)
+lib/net/smtp.rb:    # +context+ is a OpenSSL::SSL::SSLContext object.
+lib/net/smtp.rb:      raise 'openssl library not installed' unless defined?(OpenSSL::VERSION)
+lib/net/smtp.rb:    # +context+ is a OpenSSL::SSL::SSLContext object.
+lib/net/smtp.rb:      raise 'openssl library not installed' unless defined?(OpenSSL::VERSION)
+lib/net/smtp.rb:    # Additional SSLContext[https://ruby.github.io/openssl/OpenSSL/SSL/SSLContext.html]
+lib/net/smtp.rb:    # passed to {OpenSSL::SSL::SSLContext#set_params}[https://ruby.github.io/openssl/OpenSSL/SSL/SSLContext.html#method-i-set_params].
+lib/net/smtp.rb:    # verify_mode: OpenSSL::SSL::VERIFY_PEER }</tt>.
+lib/net/smtp.rb:      if defined?(OpenSSL::VERSION)
+lib/net/smtp.rb:          ssl_context_params[:verify_mode] = @tls_verify ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
+lib/net/smtp.rb:      OpenSSL::SSL::SSLSocket.new socket, context
