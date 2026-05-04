@@ -27,7 +27,9 @@ OK
 
 ## HTTPS
 
-### Direct HTTPS (WEBrick)
+### non-PQC
+
+#### Direct HTTPS (WEBrick)
 
 The HTTPS server uses `script/run_https_server.rb` (WEBrick) instead of
 `openssl s_server` because `openssl s_server -WWW` does not handle HEAD
@@ -55,7 +57,7 @@ $ script/run_https_client.sh
 OK
 ```
 
-#### Why not `openssl s_server`?
+##### Why not `openssl s_server`?
 
 Running the SSL server with `openssl s_server -WWW`:
 
@@ -64,8 +66,8 @@ $ cd server/gem
 
 $ openssl s_server \
   -accept 127.0.0.1:18443 \
-  -cert ../ssl/rsa.crt \
-  -key  ../ssl/rsa.key \
+  -cert ../ssl/rsa-2.crt \
+  -key  ../ssl/rsa-2.key \
   -WWW
 ```
 
@@ -78,7 +80,7 @@ $ script/run_https_client.sh
 HEAD https://localhost:18443/versions
 ```
 
-### TLS Reverse Proxy (Ruby OpenSSL)
+#### TLS Reverse Proxy (Ruby OpenSSL)
 
 This setup uses a TLS reverse proxy in front of the HTTP RubyGems server.
 The proxy terminates TLS and forwards requests to the backend HTTP server.
@@ -113,7 +115,7 @@ $ script/run_https_client.sh
 OK
 ```
 
-### TLS Reverse Proxy (Nginx)
+#### TLS Reverse Proxy (Nginx)
 
 This setup uses Nginx as a TLS reverse proxy in front of the HTTP RubyGems server.
 
@@ -144,6 +146,102 @@ Run the client in another terminal.
 
 ```
 $ script/run_https_client.sh
+...
+OK
+```
+
+### PQC
+
+The PQC (ML-DSA-65) mode uses dual certificates: both ML-DSA-65 and RSA
+are registered on the server. The client `-p` option runs two test passes,
+first with ML-DSA-65 signature algorithm and then with RSA, using
+`OPENSSL_CONF` to set `SignatureAlgorithms` per connection.
+
+#### Direct HTTPS (WEBrick)
+
+Set up the RubyGems server environment and generate SSL certificates.
+
+```
+$ script/setup.sh
+```
+
+Run the RubyGems HTTPS server with PQC dual certificates.
+
+```
+$ script/run_https_server.rb -p
+...
+[2026-05-04 17:13:39] INFO  WEBrick::HTTPServer#start: pid=1714984 port=18443
+```
+
+Run the client in another terminal.
+
+```
+$ script/run_https_client.sh -p
+...
+OK
+```
+
+#### TLS Reverse Proxy (Ruby OpenSSL)
+
+Set up the RubyGems server environment and generate SSL certificates.
+
+```
+$ script/setup.sh
+```
+
+Run the RubyGems HTTP server.
+
+```
+$ script/run_http_server.sh
+gem_dir: /home/jaruga/var/git/ruby-pqc-test/rubygems/server/gem
+Server started at http://0.0.0.0:18808
+Server started at http://[::]:18808
+```
+
+Run the TLS reverse proxy server with PQC dual certificates in another terminal.
+
+```
+$ script/run_https_reverse_proxy.rb -p
+TLS proxy: https://127.0.0.1:18443 -> http://127.0.0.1:18808
+```
+
+Run the client in another terminal.
+
+```
+$ script/run_https_client.sh -p
+...
+OK
+```
+
+#### TLS Reverse Proxy (Nginx)
+
+Set up the RubyGems server environment, generate SSL certificates, and test nginx configuration.
+
+```
+$ script/setup_nginx.sh
+```
+
+Run the RubyGems HTTP server.
+
+```
+$ script/run_http_server.sh
+gem_dir: /home/jaruga/var/git/ruby-pqc-test/rubygems/server/gem
+Server started at http://0.0.0.0:18808
+Server started at http://[::]:18808
+```
+
+Run the Nginx TLS reverse proxy server with PQC dual certificates in another terminal.
+
+```
+$ script/run_https_reverse_proxy_nginx.sh -p
+TLS proxy (nginx): https://127.0.0.1:18443 -> http://127.0.0.1:18808
+...
+```
+
+Run the client in another terminal.
+
+```
+$ script/run_https_client.sh -p
 ...
 OK
 ```

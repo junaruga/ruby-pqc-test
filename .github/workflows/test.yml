@@ -16,10 +16,42 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby
+      - &setup-ruby
+        name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '4.0'
+
+      - &cache-openssl
+        id: cache-openssl
+        uses: actions/cache@v5
+        with:
+          path: ~/openssl
+          key: openssl-${{ runner.os }}-openssl-3.6.2
+
+      - &compile-openssl
+        name: Compile OpenSSL library
+        if: steps.cache-openssl.outputs.cache-hit != 'true'
+        # Build steps adapted from ruby/openssl CI.
+        # FIPS is not needed for PQC but enabled for potential future use.
+        # https://github.com/ruby/openssl/blob/9baa3a1356a361a0b4609f5dadbaef18f4a14947/.github/workflows/test.yml#L139
+        run: |
+          set -x
+          mkdir -p tmp/build-openssl && cd tmp/build-openssl
+          git clone -b openssl-3.6.2 --depth 1 https://github.com/openssl/openssl.git .
+          echo "Git commit: $(git rev-parse HEAD)"
+          ./Configure --prefix=$HOME/openssl --libdir=lib enable-fips no-tests
+          make -j4 && make install_sw && make install_fips && make install_ssldirs
+
+      - &set-openssl-env
+        name: Set OpenSSL environment
+        run: |
+          echo "$HOME/openssl/bin" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=$HOME/openssl/lib" >> $GITHUB_ENV
+
+      - &openssl-version
+        name: OpenSSL version
+        run: openssl version
 
       - name: Setup
         run: script/setup.sh
@@ -39,10 +71,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '4.0'
+      - *setup-ruby
+      - *cache-openssl
+      - *compile-openssl
+      - *set-openssl-env
+      - *openssl-version
 
       - name: Setup
         run: script/setup.sh
@@ -62,10 +95,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '4.0'
+      - *setup-ruby
+      - *cache-openssl
+      - *compile-openssl
+      - *set-openssl-env
+      - *openssl-version
 
       - name: Setup
         run: script/setup.sh
@@ -87,10 +121,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '4.0'
+      - *setup-ruby
+      - *cache-openssl
+      - *compile-openssl
+      - *set-openssl-env
+      - *openssl-version
 
       - name: Setup
         run: script/setup_nginx.sh
@@ -102,3 +137,79 @@ jobs:
           script/run_https_reverse_proxy_nginx.sh &
           sleep 2
           script/run_https_client.sh
+
+  rubygems-pqc-https-direct:
+    name: rubygems PQC HTTPS direct (WEBrick)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+
+      - *setup-ruby
+      - *cache-openssl
+      - *compile-openssl
+      - *set-openssl-env
+      - *openssl-version
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run PQC HTTPS server and client
+        run: |
+          script/run_https_server.rb -p &
+          sleep 3
+          script/run_https_client.sh -p
+
+  rubygems-pqc-https-reverse-proxy-ruby-openssl:
+    name: rubygems PQC HTTPS TLS reverse proxy (Ruby OpenSSL)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+
+      - *setup-ruby
+      - *cache-openssl
+      - *compile-openssl
+      - *set-openssl-env
+      - *openssl-version
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run HTTP server, PQC TLS proxy, and client
+        run: |
+          script/run_http_server.sh &
+          sleep 2
+          script/run_https_reverse_proxy.rb -p &
+          sleep 2
+          script/run_https_client.sh -p
+
+  rubygems-pqc-https-reverse-proxy-nginx:
+    name: rubygems PQC HTTPS TLS reverse proxy (Nginx)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+
+      - *setup-ruby
+      - *cache-openssl
+      - *compile-openssl
+      - *set-openssl-env
+      - *openssl-version
+
+      - name: Setup
+        run: script/setup_nginx.sh
+
+      - name: Run HTTP server, PQC Nginx TLS proxy, and client
+        run: |
+          script/run_http_server.sh &
+          sleep 2
+          script/run_https_reverse_proxy_nginx.sh -p &
+          sleep 2
+          script/run_https_client.sh -p
