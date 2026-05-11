@@ -4,6 +4,7 @@
 # SSL/TLS reverse proxy server for RubyGems.
 # Accepts HTTPS connections and forwards them to an HTTP backend server.
 
+require 'optparse'
 require 'socket'
 require 'openssl'
 
@@ -15,10 +16,15 @@ LISTEN_PORT = 18_443
 BACKEND_HOST = '127.0.0.1'
 BACKEND_PORT = 18_808
 
-# SSL certificate paths
 TOP_DIR = File.expand_path('..', __dir__)
-CERT_PATH = File.join(TOP_DIR, 'server', 'ssl', 'rsa.crt')
-KEY_PATH = File.join(TOP_DIR, 'server', 'ssl', 'rsa.key')
+SSL_DIR = File.join(TOP_DIR, 'server', 'ssl')
+
+pqc = false
+OptionParser.new do |opts|
+  opts.on('-p', '--pqc', 'Enable dual RSA + ML-DSA-65 certificates') do
+    pqc = true
+  end
+end.parse!
 
 # Safely close a socket, ignoring any errors.
 def safe_close(socket)
@@ -50,11 +56,23 @@ ensure
   safe_close(backend)
 end
 
-# Set up SSL context with certificate and TLS 1.3
 ctx = OpenSSL::SSL::SSLContext.new
-ctx.cert = OpenSSL::X509::Certificate.new(File.read(CERT_PATH))
-ctx.key = OpenSSL::PKey.read(File.read(KEY_PATH))
 ctx.min_version = OpenSSL::SSL::TLS1_3_VERSION
+
+if pqc
+  ctx.sigalgs = 'rsa_pss_rsae_sha256:mldsa65'
+  ctx.add_certificate(
+    OpenSSL::X509::Certificate.new(File.read(File.join(SSL_DIR, 'mldsa65-2.crt'))),
+    OpenSSL::PKey.read(File.read(File.join(SSL_DIR, 'mldsa65-2.key')))
+  )
+  ctx.add_certificate(
+    OpenSSL::X509::Certificate.new(File.read(File.join(SSL_DIR, 'rsa-2.crt'))),
+    OpenSSL::PKey.read(File.read(File.join(SSL_DIR, 'rsa-2.key')))
+  )
+else
+  ctx.cert = OpenSSL::X509::Certificate.new(File.read(File.join(SSL_DIR, 'rsa-2.crt')))
+  ctx.key = OpenSSL::PKey.read(File.read(File.join(SSL_DIR, 'rsa-2.key')))
+end
 
 # Create TCP server and wrap it with SSL
 tcp = TCPServer.new(LISTEN_HOST, LISTEN_PORT)
@@ -67,4 +85,6 @@ puts "TLS proxy: https://#{LISTEN_HOST}:#{LISTEN_PORT} -> " \
 loop do
   client = ssl.accept
   Thread.new(client) { |c| handle_client(c) }
+rescue OpenSSL::SSL::SSLError => e
+  warn "SSL accept error: #{e.message}"
 end

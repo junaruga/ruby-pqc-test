@@ -1,0 +1,35 @@
+name: Setup OpenSSL
+description: Cache, compile, and configure OpenSSL 3.6.2
+
+runs:
+  using: composite
+  steps:
+    - id: cache-openssl
+      uses: actions/cache@v5
+      with:
+        path: ~/openssl
+        key: openssl-${{ runner.os }}-openssl-3.6.2
+
+    - name: Compile OpenSSL library
+      if: steps.cache-openssl.outputs.cache-hit != 'true'
+      shell: bash
+      # Build steps adapted from ruby/openssl CI.
+      # FIPS is not needed for PQC but enabled for potential future use.
+      # https://github.com/ruby/openssl/blob/9baa3a1356a361a0b4609f5dadbaef18f4a14947/.github/workflows/test.yml#L139
+      run: |
+        set -x
+        mkdir -p tmp/build-openssl && cd tmp/build-openssl
+        git clone -b openssl-3.6.2 --depth 1 https://github.com/openssl/openssl.git .
+        echo "Git commit: $(git rev-parse HEAD)"
+        ./Configure --prefix=$HOME/openssl --libdir=lib enable-fips no-tests
+        make -j4 && make install_sw && make install_fips && make install_ssldirs
+
+    - name: Set OpenSSL environment
+      shell: bash
+      run: |
+        echo "$HOME/openssl/bin" >> $GITHUB_PATH
+        echo "LD_LIBRARY_PATH=$HOME/openssl/lib" >> $GITHUB_ENV
+
+    - name: OpenSSL version
+      shell: bash
+      run: openssl version
