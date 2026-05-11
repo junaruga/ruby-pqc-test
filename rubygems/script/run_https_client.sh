@@ -63,24 +63,42 @@ EOF
 generate_openssl_conf "${SSL_DIR}/mldsa65-client.cnf" "mldsa65"
 generate_openssl_conf "${SSL_DIR}/rsa-client.cnf" "rsa_pss_rsae_sha256"
 
+# Generate gemrc files for controlling client SSL CA certificate.
+# https://github.com/ruby/rubygems/blob/92b0305c8bbc830f3cb60a6507f8dbc19e4267f7/lib/rubygems/config_file.rb#L256
+generate_gemrc() {
+    local gemrc_file="${1}"
+    local ssl_ca_cert="${2}"
+
+    cat > "${gemrc_file}" << EOF
+:ssl_ca_cert: ${ssl_ca_cert}
+EOF
+}
+
+GEMRC_MLDSA65="${TOP_DIR}/client/gemrc_mldsa65"
+GEMRC_RSA="${TOP_DIR}/client/gemrc_rsa"
+
+generate_gemrc "${GEMRC_MLDSA65}" "${SSL_DIR}/mldsa65-1.crt"
+generate_gemrc "${GEMRC_RSA}" "${SSL_DIR}/rsa-1.crt"
+
 GEM_HOME="${TEST_GEM_HOME}" \
     gem env home
 
 # OPENSSL_CONF: Specify the signature algorithms for the connection
-# SSL_CERT_FILE: Set the client certification file
 # See <https://docs.openssl.org/master/man7/openssl-env/> for details.
+# GEMRC: Set the gemrc file for the client SSL CA certificate
+# See <https://docs.ruby-lang.org/en/master/Gem/ConfigFile.html> for details.
 if [[ "${PQC}" = true ]]; then
     # Test 1: ML-DSA-65 connection (equivalent to ctx.sigalgs = 'mldsa65')
     echo "Test 1"
     OPENSSL_CONF="${SSL_DIR}/mldsa65-client.cnf" \
-        SSL_CERT_FILE="${SSL_DIR}/mldsa65-1.crt" \
+        GEMRC="${GEMRC_MLDSA65}" \
         GEM_HOME="${TEST_GEM_HOME}" \
         gem install -v 0.1.0 hello-pqc \
         --clear-sources \
         -s "https://localhost:${PORT}/" \
         -V
     OPENSSL_CONF="${SSL_DIR}/mldsa65-client.cnf" \
-        SSL_CERT_FILE="${SSL_DIR}/mldsa65-1.crt" \
+        GEMRC="${GEMRC_MLDSA65}" \
         GEM_HOME="${TEST_GEM_HOME}" \
         gem update hello-pqc \
         --clear-sources \
@@ -98,14 +116,14 @@ if [[ "${PQC}" = true ]]; then
     # Test 2: RSA connection (equivalent to ctx.sigalgs = 'rsa_pss_rsae_sha256')
     echo "Test 2"
     OPENSSL_CONF="${SSL_DIR}/rsa-client.cnf" \
-        SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt" \
+        GEMRC="${GEMRC_RSA}" \
         GEM_HOME="${TEST_GEM_HOME}" \
         gem install -v 0.1.0 hello-pqc \
         --clear-sources \
         -s "https://localhost:${PORT}/" \
         -V
     OPENSSL_CONF="${SSL_DIR}/rsa-client.cnf" \
-        SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt" \
+        GEMRC="${GEMRC_RSA}" \
         GEM_HOME="${TEST_GEM_HOME}" \
         gem update hello-pqc \
         --clear-sources \
@@ -116,13 +134,13 @@ if [[ "${PQC}" = true ]]; then
     GEM_HOME="${TEST_GEM_HOME}" \
         gem info hello-pqc
 else
-    SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt" \
+    GEMRC="${GEMRC_RSA}" \
         GEM_HOME="${TEST_GEM_HOME}" \
         gem install -v 0.1.0 hello-pqc \
         --clear-sources \
         -s "https://localhost:${PORT}/" \
         -V
-    SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt" \
+    GEMRC="${GEMRC_RSA}" \
         GEM_HOME="${TEST_GEM_HOME}" \
         gem update hello-pqc \
         --clear-sources \

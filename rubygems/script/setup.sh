@@ -39,7 +39,7 @@ mkdir -p "${TOP_DIR}/client/gem_home"
 # by the CA).
 # CA uses CN=CA and server uses CN=localhost so OpenSSL can distinguish issuer
 # from subject during chain verification.
-# The client needs the CA cert (via SSL_CERT_FILE) because gem install
+# The client needs the CA cert (via GEMRC :ssl_ca_cert) because gem install
 # uses VERIFY_PEER by default.
 # https://github.com/ruby/rubygems/blob/92b0305c8bbc830f3cb60a6507f8dbc19e4267f7/lib/rubygems/request.rb#L57-L58
 # https://docs.openssl.org/master/man3/SSL_CTX_set_verify/
