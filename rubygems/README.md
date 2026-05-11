@@ -155,7 +155,7 @@ OK
 The PQC (ML-DSA-65) mode uses dual certificates: both ML-DSA-65 and RSA
 are registered on the server. The client `-p` option runs two test passes,
 first with ML-DSA-65 signature algorithm and then with RSA, using
-`OPENSSL_CONF` to set `SignatureAlgorithms` and `SSL_CERT_FILE` for the
+`OPENSSL_CONF` to set `SignatureAlgorithms` and `GEMRC` for the
 CA cert per connection.
 
 #### Direct HTTPS (WEBrick)
