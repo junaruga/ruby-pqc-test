@@ -1,3 +1,5 @@
+[![Test](https://github.com/junaruga/ruby-pqc-test/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/junaruga/ruby-pqc-test/actions/workflows/test.yml)
+
 # ruby-pqc-test
 
 Manage files to implment PQC features to ruby/* repositories.
