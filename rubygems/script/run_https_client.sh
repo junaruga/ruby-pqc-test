@@ -75,7 +75,14 @@ if [[ "${PQC}" = true ]]; then
     OPENSSL_CONF="${SSL_DIR}/mldsa65-client.cnf" \
         SSL_CERT_FILE="${SSL_DIR}/mldsa65-1.crt" \
         GEM_HOME="${TEST_GEM_HOME}" \
-        gem install hello-pqc \
+        gem install -v 0.1.0 hello-pqc \
+        --clear-sources \
+        -s "https://localhost:${PORT}/" \
+        -V
+    OPENSSL_CONF="${SSL_DIR}/mldsa65-client.cnf" \
+        SSL_CERT_FILE="${SSL_DIR}/mldsa65-1.crt" \
+        GEM_HOME="${TEST_GEM_HOME}" \
+        gem update hello-pqc \
         --clear-sources \
         -s "https://localhost:${PORT}/" \
         -V
@@ -93,7 +100,14 @@ if [[ "${PQC}" = true ]]; then
     OPENSSL_CONF="${SSL_DIR}/rsa-client.cnf" \
         SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt" \
         GEM_HOME="${TEST_GEM_HOME}" \
-        gem install hello-pqc \
+        gem install -v 0.1.0 hello-pqc \
+        --clear-sources \
+        -s "https://localhost:${PORT}/" \
+        -V
+    OPENSSL_CONF="${SSL_DIR}/rsa-client.cnf" \
+        SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt" \
+        GEM_HOME="${TEST_GEM_HOME}" \
+        gem update hello-pqc \
         --clear-sources \
         -s "https://localhost:${PORT}/" \
         -V
@@ -104,7 +118,13 @@ if [[ "${PQC}" = true ]]; then
 else
     SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt" \
         GEM_HOME="${TEST_GEM_HOME}" \
-        gem install hello-pqc \
+        gem install -v 0.1.0 hello-pqc \
+        --clear-sources \
+        -s "https://localhost:${PORT}/" \
+        -V
+    SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt" \
+        GEM_HOME="${TEST_GEM_HOME}" \
+        gem update hello-pqc \
         --clear-sources \
         -s "https://localhost:${PORT}/" \
         -V

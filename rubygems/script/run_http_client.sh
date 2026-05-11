@@ -7,7 +7,12 @@ TEST_GEM_HOME="${TOP_DIR}/client/gem_home"
 GEM_HOME="${TEST_GEM_HOME}" \
     gem env home
 GEM_HOME="${TEST_GEM_HOME}" \
-    gem install hello-pqc \
+    gem install -v 0.1.0 hello-pqc \
+    --clear-sources \
+    -s http://127.0.0.1:18808/ \
+    -V
+GEM_HOME="${TEST_GEM_HOME}" \
+    gem update hello-pqc \
     --clear-sources \
     -s http://127.0.0.1:18808/ \
     -V
