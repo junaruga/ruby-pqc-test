@@ -10,7 +10,10 @@ rm -rf "${TOP_DIR}/server"
 rm -rf "${TOP_DIR}/client"
 
 # Build with .gemspec files
-pushd "${TOP_DIR}/build/gem/hello_pqc"
+pushd "${TOP_DIR}/build/gem/hello_pqc_010"
+gem build hello-pqc.gemspec
+popd
+pushd "${TOP_DIR}/build/gem/hello_pqc_011"
 gem build hello-pqc.gemspec
 popd
 
@@ -20,8 +23,10 @@ mkdir -p "${TOP_DIR}/server/gem/cache"
 mkdir -p "${TOP_DIR}/server/gem/specifications"
 cp -p ${TOP_DIR}/build/gem/*/*.gem "${TOP_DIR}/server/gem/gems"
 cp -p ${TOP_DIR}/build/gem/*/*.gem "${TOP_DIR}/server/gem/cache"
-cp -p "${TOP_DIR}/build/gem/hello_pqc/hello-pqc.gemspec" \
+cp -p "${TOP_DIR}/build/gem/hello_pqc_010/hello-pqc.gemspec" \
     "${TOP_DIR}/server/gem/specifications/hello-pqc-0.1.0.gemspec"
+cp -p "${TOP_DIR}/build/gem/hello_pqc_011/hello-pqc.gemspec" \
+    "${TOP_DIR}/server/gem/specifications/hello-pqc-0.1.1.gemspec"
 
 gem install rubygems-generate_index
 gem generate_index -d server/gem
