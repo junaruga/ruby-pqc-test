@@ -10,6 +10,10 @@ jobs:
   rubygems-http:
     name: rubygems HTTP server/client
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
     defaults:
       run:
         working-directory: rubygems
@@ -20,12 +24,19 @@ jobs:
         name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '4.0'
+          ruby-version: ${{ matrix.ruby-version }}
 
       - uses: ./.github/actions/setup-openssl
 
       - name: Setup
         run: script/setup.sh
+
+      # Fix handling RDoc::Servlet rename to RDoc::RI::Servlet
+      # https://github.com/rubygems/rubygems-server/pull/14
+      - &clone-rubygems-server
+        name: Clone rubygems-server (workaround for ruby-head)
+        if: matrix.ruby-version == 'head'
+        run: git clone https://github.com/ruby/rubygems-server.git ~/git/ruby/rubygems-server
 
       - name: Run HTTP server and client
         run: |
@@ -36,6 +47,10 @@ jobs:
   rubygems-https-direct:
     name: rubygems HTTPS direct (WEBrick)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
     defaults:
       run:
         working-directory: rubygems
@@ -56,6 +71,10 @@ jobs:
   rubygems-https-reverse-proxy-ruby-openssl:
     name: rubygems HTTPS TLS reverse proxy (Ruby OpenSSL)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
     defaults:
       run:
         working-directory: rubygems
@@ -66,6 +85,8 @@ jobs:
 
       - name: Setup
         run: script/setup.sh
+
+      - *clone-rubygems-server
 
       - name: Run HTTP server, TLS proxy, and client
         run: |
@@ -78,6 +99,10 @@ jobs:
   rubygems-https-reverse-proxy-nginx:
     name: rubygems HTTPS TLS reverse proxy (Nginx)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
     defaults:
       run:
         working-directory: rubygems
@@ -88,6 +113,8 @@ jobs:
 
       - name: Setup
         run: script/setup_nginx.sh
+
+      - *clone-rubygems-server
 
       - name: Run HTTP server, Nginx TLS proxy, and client
         run: |
@@ -100,6 +127,10 @@ jobs:
   rubygems-pqc-https-direct:
     name: rubygems PQC HTTPS direct (WEBrick)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
     defaults:
       run:
         working-directory: rubygems
@@ -120,6 +151,10 @@ jobs:
   rubygems-pqc-https-reverse-proxy-ruby-openssl:
     name: rubygems PQC HTTPS TLS reverse proxy (Ruby OpenSSL)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
     defaults:
       run:
         working-directory: rubygems
@@ -130,6 +165,8 @@ jobs:
 
       - name: Setup
         run: script/setup.sh
+
+      - *clone-rubygems-server
 
       - name: Run HTTP server, PQC TLS proxy, and client
         run: |
@@ -142,6 +179,10 @@ jobs:
   rubygems-pqc-https-reverse-proxy-nginx:
     name: rubygems PQC HTTPS TLS reverse proxy (Nginx)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
     defaults:
       run:
         working-directory: rubygems
@@ -152,6 +193,8 @@ jobs:
 
       - name: Setup
         run: script/setup_nginx.sh
+
+      - *clone-rubygems-server
 
       - name: Run HTTP server, PQC Nginx TLS proxy, and client
         run: |
