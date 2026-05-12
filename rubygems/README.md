@@ -22,7 +22,7 @@ Run the client in another terminal.
 ```
 $ script/run_http_client.sh
 ...
-OK
+OK: All tests passed.
 ```
 
 ## HTTPS
@@ -54,7 +54,7 @@ Run the client in another terminal.
 ```
 $ script/run_https_client.sh
 ...
-OK
+OK: All tests passed.
 ```
 
 ##### Why not `openssl s_server`?
@@ -112,7 +112,7 @@ Run the client in another terminal.
 ```
 $ script/run_https_client.sh
 ...
-OK
+OK: All tests passed.
 ```
 
 #### TLS Reverse Proxy (Nginx)
@@ -147,7 +147,7 @@ Run the client in another terminal.
 ```
 $ script/run_https_client.sh
 ...
-OK
+OK: All tests passed.
 ```
 
 ### PQC (single), non-PQC (single)
@@ -179,7 +179,7 @@ Run the client in another terminal.
 ```
 $ script/run_https_client.sh -s
 ...
-OK
+OK: All tests passed.
 ```
 
 #### TLS Reverse Proxy (Ruby OpenSSL)
@@ -212,7 +212,7 @@ Run the client in another terminal.
 ```
 $ script/run_https_client.sh -s
 ...
-OK
+OK: All tests passed.
 ```
 
 #### TLS Reverse Proxy (Nginx)
@@ -246,7 +246,7 @@ Run the client in another terminal.
 ```
 $ script/run_https_client.sh -s
 ...
-OK
+OK: All tests passed.
 ```
 
 ### PQC, non-PQC (dual)
@@ -278,7 +278,7 @@ Run the client in another terminal.
 ```
 $ script/run_https_client.sh -d
 ...
-OK
+OK: All tests passed.
 ```
 
 #### TLS Reverse Proxy (Ruby OpenSSL)
@@ -310,7 +310,7 @@ Run the client in another terminal.
 ```
 $ script/run_https_client.sh -d
 ...
-OK
+OK: All tests passed.
 ```
 
 #### TLS Reverse Proxy (Nginx)
@@ -343,5 +343,5 @@ Run the client in another terminal.
 ```
 $ script/run_https_client.sh -d
 ...
-OK
+OK: All tests passed.
 ```
