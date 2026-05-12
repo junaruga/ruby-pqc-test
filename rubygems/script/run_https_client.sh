@@ -136,11 +136,9 @@ elif [[ "${PQC_SINGLE}" = true ]]; then
 
     echo "=== Test 1: PQC (single) ML-DSA-65 connection" \
         "to port ${PORT_HTTPS} ==="
-    OPENSSL_CONF="${SSL_DIR}/mldsa65-client.cnf" \
-        GEMRC="${GEMRC_MLDSA65}" \
+    GEMRC="${GEMRC_MLDSA65}" \
         gem install -v 0.1.0 hello-pqc
-    OPENSSL_CONF="${SSL_DIR}/mldsa65-client.cnf" \
-        GEMRC="${GEMRC_MLDSA65}" \
+    GEMRC="${GEMRC_MLDSA65}" \
         gem update hello-pqc
     GEMRC="${GEMRC_MLDSA65}" \
         gem list | grep hello-pqc
@@ -153,11 +151,9 @@ elif [[ "${PQC_SINGLE}" = true ]]; then
 
     echo "=== Test 2: non-PQC (single) RSA connection" \
         "to port ${PORT_HTTPS_NON_PQC} ==="
-    OPENSSL_CONF="${SSL_DIR}/rsa-client.cnf" \
-        GEMRC="${GEMRC_RSA_SINGLE}" \
+    GEMRC="${GEMRC_RSA_SINGLE}" \
         gem install -v 0.1.0 hello-pqc
-    OPENSSL_CONF="${SSL_DIR}/rsa-client.cnf" \
-        GEMRC="${GEMRC_RSA_SINGLE}" \
+    GEMRC="${GEMRC_RSA_SINGLE}" \
         gem update hello-pqc
     GEMRC="${GEMRC_RSA_SINGLE}" \
         gem list | grep hello-pqc
