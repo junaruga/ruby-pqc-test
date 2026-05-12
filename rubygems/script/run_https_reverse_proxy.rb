@@ -19,10 +19,14 @@ BACKEND_PORT = 18_808
 TOP_DIR = File.expand_path('..', __dir__)
 SSL_DIR = File.join(TOP_DIR, 'server', 'ssl')
 
-pqc = false
+pqc_dual = false
+pqc_single = false
 OptionParser.new do |opts|
-  opts.on('-p', '--pqc', 'Enable dual RSA + ML-DSA-65 certificates') do
-    pqc = true
+  opts.on('-d', '--pqc-dual', 'Enable dual RSA + ML-DSA-65 certificates') do
+    pqc_dual = true
+  end
+  opts.on('-s', '--pqc-single', 'Enable PQC single cert mode') do
+    pqc_single = true
   end
 end.parse!
 
@@ -56,35 +60,71 @@ ensure
   safe_close(backend)
 end
 
-ctx = OpenSSL::SSL::SSLContext.new
-ctx.min_version = OpenSSL::SSL::TLS1_3_VERSION
+rsa_cert_file = File.join(SSL_DIR, 'rsa-2.crt')
+rsa_key_file = File.join(SSL_DIR, 'rsa-2.key')
+rsa_cert = OpenSSL::X509::Certificate.new(File.read(rsa_cert_file))
+rsa_key = OpenSSL::PKey.read(File.read(rsa_key_file))
+mldsa65_cert_file = File.join(SSL_DIR, 'mldsa65-2.crt')
+mldsa65_key_file = File.join(SSL_DIR, 'mldsa65-2.key')
+mldsa65_cert = OpenSSL::X509::Certificate.new(
+  File.read(mldsa65_cert_file)
+)
+mldsa65_key = OpenSSL::PKey.read(File.read(mldsa65_key_file))
 
-if pqc
-  ctx.sigalgs = 'rsa_pss_rsae_sha256:mldsa65'
-  ctx.add_certificate(
-    OpenSSL::X509::Certificate.new(File.read(File.join(SSL_DIR, 'mldsa65-2.crt'))),
-    OpenSSL::PKey.read(File.read(File.join(SSL_DIR, 'mldsa65-2.key')))
-  )
-  ctx.add_certificate(
-    OpenSSL::X509::Certificate.new(File.read(File.join(SSL_DIR, 'rsa-2.crt'))),
-    OpenSSL::PKey.read(File.read(File.join(SSL_DIR, 'rsa-2.key')))
-  )
-else
-  ctx.cert = OpenSSL::X509::Certificate.new(File.read(File.join(SSL_DIR, 'rsa-2.crt')))
-  ctx.key = OpenSSL::PKey.read(File.read(File.join(SSL_DIR, 'rsa-2.key')))
+# Start an accept loop for a given SSL server.
+def run_accept_loop(ssl)
+  loop do
+    client = ssl.accept
+    Thread.new(client) { |c| handle_client(c) }
+  rescue OpenSSL::SSL::SSLError => e
+    warn "SSL accept error: #{e.message}"
+  end
 end
 
-# Create TCP server and wrap it with SSL
-tcp = TCPServer.new(LISTEN_HOST, LISTEN_PORT)
-ssl = OpenSSL::SSL::SSLServer.new(tcp, ctx)
+if pqc_single
+  pqc_ctx = OpenSSL::SSL::SSLContext.new
+  pqc_ctx.min_version = OpenSSL::SSL::TLS1_3_VERSION
+  pqc_ctx.sigalgs = 'mldsa65'
+  pqc_ctx.add_certificate(mldsa65_cert, mldsa65_key)
 
-puts "TLS proxy: https://#{LISTEN_HOST}:#{LISTEN_PORT} -> " \
-     "http://#{BACKEND_HOST}:#{BACKEND_PORT}"
+  non_pqc_ctx = OpenSSL::SSL::SSLContext.new
+  non_pqc_ctx.min_version = OpenSSL::SSL::TLS1_3_VERSION
+  non_pqc_ctx.cert = rsa_cert
+  non_pqc_ctx.key = rsa_key
 
-# Main loop: accept connections and handle each in a new thread
-loop do
-  client = ssl.accept
-  Thread.new(client) { |c| handle_client(c) }
-rescue OpenSSL::SSL::SSLError => e
-  warn "SSL accept error: #{e.message}"
+  pqc_tcp = TCPServer.new(LISTEN_HOST, LISTEN_PORT)
+  pqc_ssl = OpenSSL::SSL::SSLServer.new(pqc_tcp, pqc_ctx)
+
+  non_pqc_port = 18_444
+  non_pqc_tcp = TCPServer.new(LISTEN_HOST, non_pqc_port)
+  non_pqc_ssl = OpenSSL::SSL::SSLServer.new(non_pqc_tcp, non_pqc_ctx)
+
+  puts "TLS proxy (PQC single): https://#{LISTEN_HOST}:#{LISTEN_PORT} -> " \
+       "http://#{BACKEND_HOST}:#{BACKEND_PORT}"
+  puts 'TLS proxy (non-PQC single): ' \
+       "https://#{LISTEN_HOST}:#{non_pqc_port} -> " \
+       "http://#{BACKEND_HOST}:#{BACKEND_PORT}"
+
+  Thread.new { run_accept_loop(non_pqc_ssl) }
+  run_accept_loop(pqc_ssl)
+else
+  ctx = OpenSSL::SSL::SSLContext.new
+  ctx.min_version = OpenSSL::SSL::TLS1_3_VERSION
+
+  if pqc_dual
+    ctx.sigalgs = 'rsa_pss_rsae_sha256:mldsa65'
+    ctx.add_certificate(mldsa65_cert, mldsa65_key)
+    ctx.add_certificate(rsa_cert, rsa_key)
+  else
+    ctx.cert = rsa_cert
+    ctx.key = rsa_key
+  end
+
+  tcp = TCPServer.new(LISTEN_HOST, LISTEN_PORT)
+  ssl = OpenSSL::SSL::SSLServer.new(tcp, ctx)
+
+  puts "TLS proxy: https://#{LISTEN_HOST}:#{LISTEN_PORT} -> " \
+       "http://#{BACKEND_HOST}:#{BACKEND_PORT}"
+
+  run_accept_loop(ssl)
 end

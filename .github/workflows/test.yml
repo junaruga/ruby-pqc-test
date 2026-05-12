@@ -124,8 +124,8 @@ jobs:
           sleep 2
           script/run_https_client.sh
 
-  rubygems-pqc-https-direct:
-    name: rubygems PQC HTTPS direct (WEBrick)
+  rubygems-pqc-single-https-direct:
+    name: rubygems PQC single HTTPS direct (WEBrick)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -142,14 +142,14 @@ jobs:
       - name: Setup
         run: script/setup.sh
 
-      - name: Run PQC HTTPS server and client
+      - name: Run PQC single HTTPS server and client
         run: |
-          script/run_https_server.rb -p &
+          script/run_https_server.rb -s &
           sleep 3
-          script/run_https_client.sh -p
+          script/run_https_client.sh -s
 
-  rubygems-pqc-https-reverse-proxy-ruby-openssl:
-    name: rubygems PQC HTTPS TLS reverse proxy (Ruby OpenSSL)
+  rubygems-pqc-single-https-reverse-proxy-ruby-openssl:
+    name: rubygems PQC single HTTPS TLS reverse proxy (Ruby OpenSSL)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -168,16 +168,16 @@ jobs:
 
       - *clone-rubygems-server
 
-      - name: Run HTTP server, PQC TLS proxy, and client
+      - name: Run HTTP server, PQC single TLS proxy, and client
         run: |
           script/run_http_server.sh &
           sleep 2
-          script/run_https_reverse_proxy.rb -p &
+          script/run_https_reverse_proxy.rb -s &
           sleep 2
-          script/run_https_client.sh -p
+          script/run_https_client.sh -s
 
-  rubygems-pqc-https-reverse-proxy-nginx:
-    name: rubygems PQC HTTPS TLS reverse proxy (Nginx)
+  rubygems-pqc-single-https-reverse-proxy-nginx:
+    name: rubygems PQC single HTTPS TLS reverse proxy (Nginx)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -196,10 +196,90 @@ jobs:
 
       - *clone-rubygems-server
 
-      - name: Run HTTP server, PQC Nginx TLS proxy, and client
+      - name: Run HTTP server, PQC single Nginx TLS proxy, and client
         run: |
           script/run_http_server.sh &
           sleep 2
-          script/run_https_reverse_proxy_nginx.sh -p &
+          script/run_https_reverse_proxy_nginx.sh -s &
           sleep 2
-          script/run_https_client.sh -p
+          script/run_https_client.sh -s
+
+  rubygems-pqc-dual-https-direct:
+    name: rubygems PQC dual HTTPS direct (WEBrick)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run PQC dual HTTPS server and client
+        run: |
+          script/run_https_server.rb -d &
+          sleep 3
+          script/run_https_client.sh -d
+
+  rubygems-pqc-dual-https-reverse-proxy-ruby-openssl:
+    name: rubygems PQC dual HTTPS TLS reverse proxy (Ruby OpenSSL)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+
+      - name: Setup
+        run: script/setup.sh
+
+      - *clone-rubygems-server
+
+      - name: Run HTTP server, PQC dual TLS proxy, and client
+        run: |
+          script/run_http_server.sh &
+          sleep 2
+          script/run_https_reverse_proxy.rb -d &
+          sleep 2
+          script/run_https_client.sh -d
+
+  rubygems-pqc-dual-https-reverse-proxy-nginx:
+    name: rubygems PQC dual HTTPS TLS reverse proxy (Nginx)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+
+      - name: Setup
+        run: script/setup_nginx.sh
+
+      - *clone-rubygems-server
+
+      - name: Run HTTP server, PQC dual Nginx TLS proxy, and client
+        run: |
+          script/run_http_server.sh &
+          sleep 2
+          script/run_https_reverse_proxy_nginx.sh -d &
+          sleep 2
+          script/run_https_client.sh -d
