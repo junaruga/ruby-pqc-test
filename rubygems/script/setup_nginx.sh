@@ -14,11 +14,13 @@ mkdir -p "${TOP_DIR}/server/nginx/tmp"
 
 # Copy nginx configuration
 cp "${TOP_DIR}"/build/nginx/etc/nginx.conf \
-    "${TOP_DIR}"/build/nginx/etc/nginx-pqc.conf \
+    "${TOP_DIR}"/build/nginx/etc/nginx-pqc-dual.conf \
+    "${TOP_DIR}"/build/nginx/etc/nginx-pqc-single.conf \
     "${TOP_DIR}/server/nginx/etc/"
 
 # Test nginx configuration
 nginx -e stderr -t -p "${TOP_DIR}/server/nginx" -c etc/nginx.conf
-nginx -e stderr -t -p "${TOP_DIR}/server/nginx" -c etc/nginx-pqc.conf
+nginx -e stderr -t -p "${TOP_DIR}/server/nginx" -c etc/nginx-pqc-dual.conf
+nginx -e stderr -t -p "${TOP_DIR}/server/nginx" -c etc/nginx-pqc-single.conf
 
 echo "OK"
