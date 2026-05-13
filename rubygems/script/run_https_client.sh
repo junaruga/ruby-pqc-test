@@ -106,10 +106,10 @@ if [[ "${PQC_DUAL}" = true ]]; then
         "(equivalent to ctx.sigalgs = 'mldsa65') ==="
     OPENSSL_CONF="${SSL_DIR}/mldsa65-client.cnf" \
         GEMRC="${GEMRC_MLDSA65}" \
-        gem install -v 0.1.0 hello-pqc
+        gem install -v 0.1.0 hello-pqc -V
     OPENSSL_CONF="${SSL_DIR}/mldsa65-client.cnf" \
         GEMRC="${GEMRC_MLDSA65}" \
-        gem update hello-pqc
+        gem update hello-pqc -V
     GEMRC="${GEMRC_MLDSA65}" \
         gem list | grep hello-pqc
     GEMRC="${GEMRC_MLDSA65}" \
@@ -123,10 +123,10 @@ if [[ "${PQC_DUAL}" = true ]]; then
         "(equivalent to ctx.sigalgs = 'rsa_pss_rsae_sha256') ==="
     OPENSSL_CONF="${SSL_DIR}/rsa-client.cnf" \
         GEMRC="${GEMRC_RSA}" \
-        gem install -v 0.1.0 hello-pqc
+        gem install -v 0.1.0 hello-pqc -V
     OPENSSL_CONF="${SSL_DIR}/rsa-client.cnf" \
         GEMRC="${GEMRC_RSA}" \
-        gem update hello-pqc
+        gem update hello-pqc -V
     GEMRC="${GEMRC_RSA}" \
         gem list | grep hello-pqc
     GEMRC="${GEMRC_RSA}" \
@@ -137,9 +137,9 @@ elif [[ "${PQC_SINGLE}" = true ]]; then
     echo "=== Test 1: PQC (single) ML-DSA-65 connection" \
         "to port ${PORT_HTTPS} ==="
     GEMRC="${GEMRC_MLDSA65}" \
-        gem install -v 0.1.0 hello-pqc
+        gem install -v 0.1.0 hello-pqc -V
     GEMRC="${GEMRC_MLDSA65}" \
-        gem update hello-pqc
+        gem update hello-pqc -V
     GEMRC="${GEMRC_MLDSA65}" \
         gem list | grep hello-pqc
     GEMRC="${GEMRC_MLDSA65}" \
@@ -152,9 +152,9 @@ elif [[ "${PQC_SINGLE}" = true ]]; then
     echo "=== Test 2: non-PQC (single) RSA connection" \
         "to port ${PORT_HTTPS_NON_PQC} ==="
     GEMRC="${GEMRC_RSA_SINGLE}" \
-        gem install -v 0.1.0 hello-pqc
+        gem install -v 0.1.0 hello-pqc -V
     GEMRC="${GEMRC_RSA_SINGLE}" \
-        gem update hello-pqc
+        gem update hello-pqc -V
     GEMRC="${GEMRC_RSA_SINGLE}" \
         gem list | grep hello-pqc
     GEMRC="${GEMRC_RSA_SINGLE}" \
@@ -163,9 +163,9 @@ else
     echo "Mode: non-PQC"
 
     GEMRC="${GEMRC_RSA}" \
-        gem install -v 0.1.0 hello-pqc
+        gem install -v 0.1.0 hello-pqc -V
     GEMRC="${GEMRC_RSA}" \
-        gem update hello-pqc
+        gem update hello-pqc -V
     GEMRC="${GEMRC_RSA}" \
         gem list | grep hello-pqc
     GEMRC="${GEMRC_RSA}" \
