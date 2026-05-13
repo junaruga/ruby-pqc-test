@@ -1,4 +1,4 @@
-name: Test
+name: RubyGems
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  rubygems-http:
-    name: rubygems HTTP server/client
+  http:
+    name: HTTP server/client
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -44,8 +44,8 @@ jobs:
           sleep 3
           script/run_http_client.sh
 
-  rubygems-https-direct:
-    name: rubygems HTTPS direct (WEBrick)
+  https-direct:
+    name: HTTPS direct (WEBrick)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -68,8 +68,8 @@ jobs:
           sleep 3
           script/run_https_client.sh
 
-  rubygems-https-reverse-proxy-ruby-openssl:
-    name: rubygems HTTPS TLS reverse proxy (Ruby OpenSSL)
+  https-reverse-proxy-ruby-openssl:
+    name: HTTPS TLS reverse proxy (Ruby OpenSSL)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -96,8 +96,8 @@ jobs:
           sleep 2
           script/run_https_client.sh
 
-  rubygems-https-reverse-proxy-nginx:
-    name: rubygems HTTPS TLS reverse proxy (Nginx)
+  https-reverse-proxy-nginx:
+    name: HTTPS TLS reverse proxy (Nginx)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -124,8 +124,8 @@ jobs:
           sleep 2
           script/run_https_client.sh
 
-  rubygems-pqc-single-https-direct:
-    name: rubygems PQC single HTTPS direct (WEBrick)
+  pqc-single-https-direct:
+    name: PQC single HTTPS direct (WEBrick)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -148,8 +148,8 @@ jobs:
           sleep 3
           script/run_https_client.sh -s
 
-  rubygems-pqc-single-https-reverse-proxy-ruby-openssl:
-    name: rubygems PQC single HTTPS TLS reverse proxy (Ruby OpenSSL)
+  pqc-single-https-reverse-proxy-ruby-openssl:
+    name: PQC single HTTPS TLS reverse proxy (Ruby OpenSSL)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -176,8 +176,8 @@ jobs:
           sleep 2
           script/run_https_client.sh -s
 
-  rubygems-pqc-single-https-reverse-proxy-nginx:
-    name: rubygems PQC single HTTPS TLS reverse proxy (Nginx)
+  pqc-single-https-reverse-proxy-nginx:
+    name: PQC single HTTPS TLS reverse proxy (Nginx)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -204,8 +204,8 @@ jobs:
           sleep 2
           script/run_https_client.sh -s
 
-  rubygems-pqc-dual-https-direct:
-    name: rubygems PQC dual HTTPS direct (WEBrick)
+  pqc-dual-https-direct:
+    name: PQC dual HTTPS direct (WEBrick)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -228,8 +228,8 @@ jobs:
           sleep 3
           script/run_https_client.sh -d
 
-  rubygems-pqc-dual-https-reverse-proxy-ruby-openssl:
-    name: rubygems PQC dual HTTPS TLS reverse proxy (Ruby OpenSSL)
+  pqc-dual-https-reverse-proxy-ruby-openssl:
+    name: PQC dual HTTPS TLS reverse proxy (Ruby OpenSSL)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -256,8 +256,8 @@ jobs:
           sleep 2
           script/run_https_client.sh -d
 
-  rubygems-pqc-dual-https-reverse-proxy-nginx:
-    name: rubygems PQC dual HTTPS TLS reverse proxy (Nginx)
+  pqc-dual-https-reverse-proxy-nginx:
+    name: PQC dual HTTPS TLS reverse proxy (Nginx)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
