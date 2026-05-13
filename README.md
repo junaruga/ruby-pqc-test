@@ -1,4 +1,4 @@
-[![Test](https://github.com/junaruga/ruby-pqc-test/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/junaruga/ruby-pqc-test/actions/workflows/test.yml)
+[![RubyGems](https://github.com/junaruga/ruby-pqc-test/actions/workflows/rubygems.yml/badge.svg?branch=main)](https://github.com/junaruga/ruby-pqc-test/actions/workflows/rubygems.yml)
 
 # ruby-pqc-test
 
