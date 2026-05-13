@@ -43,6 +43,9 @@ $ script/setup.sh
 
 Run the RubyGems HTTPS server.
 
+Note that `run_https_server.rb` is a WEBrick-based HTTPS server that emulates a
+RubyGems server.
+
 ```
 $ script/run_https_server.rb
 ...
