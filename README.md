@@ -1,4 +1,5 @@
 [![RubyGems](https://github.com/junaruga/ruby-pqc-test/actions/workflows/rubygems.yml/badge.svg?branch=main)](https://github.com/junaruga/ruby-pqc-test/actions/workflows/rubygems.yml)
+[![Bundler](https://github.com/junaruga/ruby-pqc-test/actions/workflows/bundler.yml/badge.svg?branch=main)](https://github.com/junaruga/ruby-pqc-test/actions/workflows/bundler.yml)
 
 # ruby-pqc-test
 
