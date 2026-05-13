@@ -1,3 +1,4 @@
+/bundler/tmp
 /rubygems/build/gem/*/*.gem
 /rubygems/build/ssl
 /rubygems/client

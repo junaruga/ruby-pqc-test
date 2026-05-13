@@ -29,7 +29,7 @@ cp -p "${TOP_DIR}/build/gem/hello_pqc_011/hello-pqc.gemspec" \
     "${TOP_DIR}/server/gem/specifications/hello-pqc-0.1.1.gemspec"
 
 gem install rubygems-generate_index
-gem generate_index -d server/gem
+gem generate_index -d "${TOP_DIR}/server/gem"
 
 # Set up client gem home directory
 mkdir -p "${TOP_DIR}/client/gem_home"
