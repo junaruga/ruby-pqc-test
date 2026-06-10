@@ -74,8 +74,8 @@ if [[ "${PQC_DUAL}" = true ]]; then
         "(equivalent to ctx.sigalgs = 'mldsa65') ==="
     # FIXME: The `bundle config set ssl_ca_cert` command doesn't work.
     # https://bundler.io/man/bundle-config.1.html - ssl_ca_cert
-    # bundle config set --local ssl_ca_cert "${SSL_DIR}/mldsa65-1.crt"
-    export SSL_CERT_FILE="${SSL_DIR}/mldsa65-1.crt"
+    bundle config set --local ssl_ca_cert "${SSL_DIR}/mldsa65-1.crt"
+    # export SSL_CERT_FILE="${SSL_DIR}/mldsa65-1.crt"
     export OPENSSL_CONF="${SSL_DIR}/mldsa65-client.cnf"
     bundle config set --local \
         mirror.https://localhost:${PORT_HTTPS_NON_PQC} \
@@ -104,8 +104,8 @@ if [[ "${PQC_DUAL}" = true ]]; then
         "(equivalent to ctx.sigalgs = 'rsa_pss_rsae_sha256') ==="
     # FIXME: The `bundle config set ssl_ca_cert` command doesn't work.
     # https://bundler.io/man/bundle-config.1.html - ssl_ca_cert
-    # bundle config set --local ssl_ca_cert "${SSL_DIR}/rsa-1.crt"
-    export SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt"
+    bundle config set --local ssl_ca_cert "${SSL_DIR}/rsa-1.crt"
+    # export SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt"
     export OPENSSL_CONF="${SSL_DIR}/rsa-client.cnf"
     bundle config set --local \
         mirror.https://localhost:${PORT_HTTPS_NON_PQC} \
@@ -127,8 +127,8 @@ elif [[ "${PQC_SINGLE}" = true ]]; then
         "to port ${PORT_HTTPS} ==="
     # FIXME: The `bundle config set ssl_ca_cert` command doesn't work.
     # https://bundler.io/man/bundle-config.1.html - ssl_ca_cert
-    # bundle config set --local ssl_ca_cert "${SSL_DIR}/mldsa65-1.crt"
-    export SSL_CERT_FILE="${SSL_DIR}/mldsa65-1.crt"
+    bundle config set --local ssl_ca_cert "${SSL_DIR}/mldsa65-1.crt"
+    # export SSL_CERT_FILE="${SSL_DIR}/mldsa65-1.crt"
     bundle config set --local \
         mirror.https://localhost:${PORT_HTTPS_NON_PQC} \
         https://localhost:${PORT_HTTPS}
@@ -155,8 +155,8 @@ elif [[ "${PQC_SINGLE}" = true ]]; then
         "to port ${PORT_HTTPS_NON_PQC} ==="
     # FIXME: The `bundle config set ssl_ca_cert` command doesn't work.
     # https://bundler.io/man/bundle-config.1.html - ssl_ca_cert
-    # bundle config set --local ssl_ca_cert "${SSL_DIR}/rsa-1.crt"
-    export SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt"
+    bundle config set --local ssl_ca_cert "${SSL_DIR}/rsa-1.crt"
+    # export SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt"
     bundle config set --local path vendor/bundle
     bundle config list
     cp -p "${TOP_DIR}/client/Gemfile.1" Gemfile
@@ -172,8 +172,8 @@ else
 
     # FIXME: The `bundle config set ssl_ca_cert` command doesn't work.
     # https://bundler.io/man/bundle-config.1.html - ssl_ca_cert
-    # bundle config set --local ssl_ca_cert "${SSL_DIR}/rsa-1.crt"
-    export SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt"
+    bundle config set --local ssl_ca_cert "${SSL_DIR}/rsa-1.crt"
+    # export SSL_CERT_FILE="${SSL_DIR}/rsa-1.crt"
     bundle config set --local \
         mirror.https://localhost:${PORT_HTTPS_NON_PQC} \
         https://localhost:${PORT_HTTPS}
