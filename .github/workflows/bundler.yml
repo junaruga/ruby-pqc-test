@@ -31,6 +31,17 @@ jobs:
       - name: Setup
         run: ../rubygems/script/setup.sh
 
+      # Workaround to use `bundle config set ssl_ca_cert`.
+      # https://github.com/ruby/rubygems/pull/9610
+      - &install-bundler-from-fork
+        name: Install bundler from fork
+        run: |
+          git clone -b wip/bundler-fix-bundle-config-set-ssl_ca_cert --depth 1 \
+            https://github.com/junaruga/rubygems.git ~/git/junaruga/rubygems
+          cd ~/git/junaruga/rubygems/bundler
+          gem build bundler.gemspec
+          gem install bundler-*.gem --no-document
+
       - name: Run HTTPS server and client
         run: |
           ../rubygems/script/run_https_server.rb &
@@ -54,6 +65,8 @@ jobs:
 
       - name: Setup
         run: ../rubygems/script/setup.sh
+
+      - *install-bundler-from-fork
 
       - &clone-rubygems-server
         name: Clone rubygems-server (workaround for ruby-head)
@@ -86,6 +99,8 @@ jobs:
       - name: Setup
         run: ../rubygems/script/setup_nginx.sh
 
+      - *install-bundler-from-fork
+
       - *clone-rubygems-server
 
       - name: Run HTTP server, Nginx TLS proxy, and client
@@ -114,6 +129,8 @@ jobs:
       - name: Setup
         run: ../rubygems/script/setup.sh
 
+      - *install-bundler-from-fork
+
       - name: Run PQC single HTTPS server and client
         run: |
           ../rubygems/script/run_https_server.rb -s &
@@ -137,6 +154,8 @@ jobs:
 
       - name: Setup
         run: ../rubygems/script/setup.sh
+
+      - *install-bundler-from-fork
 
       - *clone-rubygems-server
 
@@ -166,6 +185,8 @@ jobs:
       - name: Setup
         run: ../rubygems/script/setup_nginx.sh
 
+      - *install-bundler-from-fork
+
       - *clone-rubygems-server
 
       - name: Run HTTP server, PQC single Nginx TLS proxy, and client
@@ -194,6 +215,8 @@ jobs:
       - name: Setup
         run: ../rubygems/script/setup.sh
 
+      - *install-bundler-from-fork
+
       - name: Run PQC dual HTTPS server and client
         run: |
           ../rubygems/script/run_https_server.rb -d &
@@ -217,6 +240,8 @@ jobs:
 
       - name: Setup
         run: ../rubygems/script/setup.sh
+
+      - *install-bundler-from-fork
 
       - *clone-rubygems-server
 
@@ -245,6 +270,8 @@ jobs:
 
       - name: Setup
         run: ../rubygems/script/setup_nginx.sh
+
+      - *install-bundler-from-fork
 
       - *clone-rubygems-server
 
