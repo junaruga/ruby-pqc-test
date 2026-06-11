@@ -36,9 +36,9 @@ jobs:
       - &install-bundler-from-fork
         name: Install bundler from fork
         run: |
-          git clone -b wip/bundler-fix-bundle-config-set-ssl_ca_cert --depth 1 \
-            https://github.com/junaruga/rubygems.git ~/git/junaruga/rubygems
-          cd ~/git/junaruga/rubygems/bundler
+          git clone --depth 1 \
+            https://github.com/ruby/rubygems.git ~/git/ruby/rubygems
+          cd ~/git/ruby/rubygems/bundler
           gem build bundler.gemspec
           gem install bundler-*.gem --no-document
 
