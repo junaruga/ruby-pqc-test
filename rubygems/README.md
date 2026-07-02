@@ -348,3 +348,27 @@ $ script/run_https_client.sh -d
 ...
 OK: All tests passed.
 ```
+
+## Signed gem
+
+Install expect package used in the following testing script.
+
+Fedora Linux:
+
+```
+$ sudo dnf install expect
+```
+
+Ubuntu:
+
+```
+$ sudo apt install expect
+```
+
+Test gem signing and installation with ML-DSA (PQC) and RSA (non-PQC) certificates.
+
+```
+$ script/test_signed_gems.sh
+...
+OK: All tests passed.
+```

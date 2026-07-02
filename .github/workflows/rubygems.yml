@@ -283,3 +283,26 @@ jobs:
           script/run_https_reverse_proxy_nginx.sh -d &
           sleep 2
           script/run_https_client.sh -d
+
+  # Test use cases with signed gems documented on the following page
+  # https://guides.rubygems.org/security/
+  signed-gem:
+    name: Signed gem
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: rubygems
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+
+      - name: Install expect
+        run: sudo apt install -y expect
+
+      - name: Run signed gem test
+        run: script/test_signed_gems.sh
