@@ -40,7 +40,7 @@ mv gem-private_key.pem "${TOP_DIR}/build/ssl/gem-private_key_rsa.pem"
 # ML-DSA gem signing cert, key
 # Emulate input from tty
 expect -c "
-  spawn ${GEM} cert --build jaruga@ruby-lang.org -A ML-DSA
+  spawn ${GEM} cert --build jaruga@ruby-lang.org -A ML-DSA-65
   expect \"Passphrase for your Private Key:\"
   send \"${KEY_PASS}\r\"
   expect \"Please repeat the passphrase for your Private Key:\"
