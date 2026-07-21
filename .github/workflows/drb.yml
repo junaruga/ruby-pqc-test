@@ -52,3 +52,27 @@ jobs:
           script/run_drbssl_server.rb &
           sleep 3
           script/run_drbssl_client.rb
+
+  drbssl-rsa:
+    name: drbssl RSA
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: drb
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run drbssl RSA server and client
+        run: |
+          script/run_drbssl_server_rsa.rb &
+          sleep 3
+          script/run_drbssl_client_rsa.rb
