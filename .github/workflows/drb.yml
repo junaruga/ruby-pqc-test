@@ -1,0 +1,54 @@
+name: DRb
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  druby:
+    name: druby
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: drb
+    steps:
+      - uses: actions/checkout@v4
+
+      - &setup-ruby
+        name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+
+      - name: Run druby server and client
+        run: |
+          script/run_druby_server.rb &
+          sleep 3
+          script/run_druby_client.rb
+
+  drbssl:
+    name: drbssl
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: drb
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+
+      - name: Run drbssl server and client
+        run: |
+          script/run_drbssl_server.rb &
+          sleep 3
+          script/run_drbssl_client.rb
