@@ -76,3 +76,27 @@ jobs:
           script/run_drbssl_server_rsa.rb &
           sleep 3
           script/run_drbssl_client_rsa.rb
+
+  drbssl-mldsa65:
+    name: drbssl ML-DSA-65
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: drb
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run drbssl ML-DSA-65 server and client
+        run: |
+          script/run_drbssl_server_mldsa65.rb &
+          sleep 3
+          script/run_drbssl_client_mldsa65.rb

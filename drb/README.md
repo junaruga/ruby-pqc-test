@@ -59,3 +59,28 @@ Run the client in another terminal.
 $ script/run_drbssl_client_rsa.rb
 2026-07-21 18:12:04 +0100
 ```
+
+## drbssl ML-DSA-65 (SSL with pre-generated key/cert)
+
+Set up SSL certificates.
+
+```
+$ script/setup.sh
+...
+OK
+```
+
+Run the drbssl ML-DSA-65 server.
+
+```
+$ script/run_drbssl_server_mldsa65.rb
+Key: #<OpenSSL::PKey::PKey:0x00007f253f25f9e8 type_name=ML-DSA-65 provider=default>
+Signature algorithm: ML-DSA-65
+```
+
+Run the client in another terminal.
+
+```
+$ script/run_drbssl_client_mldsa65.rb
+2026-07-21 18:30:01 +0100
+```
