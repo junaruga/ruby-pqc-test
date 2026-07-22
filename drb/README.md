@@ -32,7 +32,20 @@ Run the client in another terminal.
 
 ```
 $ script/run_drbssl_client.rb
-2026-07-21 15:54:18 +0100
+2026-07-22 14:07:00 +0100
+Group: X25519MLKEM768
+Signature Algorithm:
+Peer Signature Algorithm: rsa_pss_rsae_sha256
+```
+
+The server shows additional SSL socket info after the client connects.
+
+```
+$ script/run_drbssl_server.rb
+...
+Group: X25519MLKEM768
+Signature Algorithm: rsa_pss_rsae_sha256
+Peer Signature Algorithm:
 ```
 
 ## drbssl RSA (SSL with pre-generated key/cert)
@@ -49,7 +62,7 @@ Run the drbssl RSA server.
 
 ```
 $ script/run_drbssl_server_rsa.rb
-Key: #<OpenSSL::PKey::RSA:0x00007f5175d3f978 oid=rsaEncryption type_name=RSA provider=default>
+Key: #<OpenSSL::PKey::RSA:0x00007facbbc3f8b0 oid=rsaEncryption type_name=RSA provider=default>
 Signature algorithm: sha256WithRSAEncryption
 ```
 
@@ -57,7 +70,20 @@ Run the client in another terminal.
 
 ```
 $ script/run_drbssl_client_rsa.rb
-2026-07-21 18:12:04 +0100
+2026-07-22 16:17:38 +0100
+Group: X25519MLKEM768
+Signature Algorithm:
+Peer Signature Algorithm: rsa_pss_rsae_sha256
+```
+
+The server shows additional SSL socket info after the client connects.
+
+```
+$ script/run_drbssl_server_rsa.rb
+...
+Group: X25519MLKEM768
+Signature Algorithm: rsa_pss_rsae_sha256
+Peer Signature Algorithm:
 ```
 
 ## drbssl ML-DSA-65 (SSL with pre-generated key/cert)
@@ -74,7 +100,7 @@ Run the drbssl ML-DSA-65 server.
 
 ```
 $ script/run_drbssl_server_mldsa65.rb
-Key: #<OpenSSL::PKey::PKey:0x00007f253f25f9e8 type_name=ML-DSA-65 provider=default>
+Key: #<OpenSSL::PKey::PKey:0x00007fdf2dbbf8c8 type_name=ML-DSA-65 provider=default>
 Signature algorithm: ML-DSA-65
 ```
 
@@ -82,5 +108,18 @@ Run the client in another terminal.
 
 ```
 $ script/run_drbssl_client_mldsa65.rb
-2026-07-21 18:30:01 +0100
+2026-07-22 16:19:55 +0100
+Group: X25519MLKEM768
+Signature Algorithm:
+Peer Signature Algorithm: mldsa65
+```
+
+The server shows additional SSL socket info after the client connects.
+
+```
+$ script/run_drbssl_server_mldsa65.rb
+...
+Group: X25519MLKEM768
+Signature Algorithm: mldsa65
+Peer Signature Algorithm:
 ```

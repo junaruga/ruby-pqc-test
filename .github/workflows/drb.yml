@@ -47,6 +47,12 @@ jobs:
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
 
+      # Reinstall openssl gem against custom OpenSSL >= 3.6 to some methods
+      # enabled for compiling OpenSSL >= 3.6
+      - &reinstall-openssl-gem
+        name: Reinstall openssl gem against custom OpenSSL
+        run: gem install openssl -- --with-openssl-dir=$HOME/openssl
+
       - name: Run drbssl server and client
         run: |
           script/run_drbssl_server.rb &
@@ -67,6 +73,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *reinstall-openssl-gem
 
       - name: Setup
         run: script/setup.sh
@@ -91,6 +98,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *reinstall-openssl-gem
 
       - name: Setup
         run: script/setup.sh
