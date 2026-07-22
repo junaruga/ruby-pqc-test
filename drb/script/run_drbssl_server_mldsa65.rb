@@ -18,9 +18,9 @@ class TimeServer
   def print_ssl_socket_info
     # OpenSSL::SSL::SSLSocket object
     ssl = Thread.current['DRb']['client'].stream
-    puts "Group: #{ssl.group}"
-    puts "Signature Algorithm: #{ssl.sigalg}"
-    puts "Peer Signature Algorithm: #{ssl.peer_sigalg}"
+    puts "server: Group: #{ssl.group}"
+    puts "server: Signature Algorithm: #{ssl.sigalg}"
+    puts "server: Peer Signature Algorithm: #{ssl.peer_sigalg}"
   end
 end
 
@@ -42,8 +42,8 @@ ssl_config = protocol.instance_variable_get(:@config)
 pkey = ssl_config.instance_variable_get(:@pkey)
 cert = ssl_config.instance_variable_get(:@cert)
 
-puts "Key: #{pkey.inspect}"
-puts "Signature algorithm: #{cert.signature_algorithm}"
+puts "server: Key: #{pkey.inspect}"
+puts "server: Signature algorithm: #{cert.signature_algorithm}"
 
 # Wait for the drb server thread to finish before exiting.
 DRb.thread.join
