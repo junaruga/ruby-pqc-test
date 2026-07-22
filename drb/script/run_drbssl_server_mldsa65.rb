@@ -14,6 +14,14 @@ class TimeServer
   def current_time
     Time.now
   end
+
+  def print_ssl_socket_info
+    # OpenSSL::SSL::SSLSocket object
+    ssl = Thread.current['DRb']['client'].stream
+    puts "Group: #{ssl.group}"
+    puts "Signature Algorithm: #{ssl.sigalg}"
+    puts "Peer Signature Algorithm: #{ssl.peer_sigalg}"
+  end
 end
 
 config = {

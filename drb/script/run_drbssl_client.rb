@@ -23,3 +23,15 @@ DRb.start_service(nil, nil, config)
 
 timeserver = DRbObject.new_with_uri(SERVER_URI)
 puts timeserver.current_time
+
+# Print server's SSL socket info
+timeserver.print_ssl_socket_info
+
+# Print client's SSL socket info
+DRb::DRbConn.open(SERVER_URI) do |conn|
+  ssl = conn.instance_variable_get(:@protocol).stream
+  puts "Group: #{ssl.group}"
+  puts "Signature Algorithm: #{ssl.sigalg}"
+  puts "Peer Signature Algorithm: #{ssl.peer_sigalg}"
+  [true, nil]
+end
