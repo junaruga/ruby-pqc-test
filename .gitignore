@@ -1,4 +1,7 @@
 /bundler/tmp
+/drb/build/ssl
+/drb/client
+/drb/server
 /rubygems/build/gem/*/*.gem
 /rubygems/build/ssl
 /rubygems/client
