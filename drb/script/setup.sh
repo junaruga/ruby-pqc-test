@@ -45,8 +45,25 @@ openssl x509 \
     -copy_extensions copyall \
     -out "${TOP_DIR}/build/ssl/rsa-2.crt"
 
+# RSA client cert (rsa-3)
+openssl req \
+    -newkey rsa:2048 \
+    -keyout "${TOP_DIR}/build/ssl/rsa-3.key" \
+    -subj /CN=Client \
+    -nodes \
+    -out "${TOP_DIR}/build/ssl/rsa-3.csr"
+
+openssl x509 \
+    -req \
+    -in "${TOP_DIR}/build/ssl/rsa-3.csr" \
+    -CA "${TOP_DIR}/build/ssl/rsa-1.crt" \
+    -CAkey "${TOP_DIR}/build/ssl/rsa-1.key" \
+    -CAcreateserial \
+    -out "${TOP_DIR}/build/ssl/rsa-3.crt"
+
 cp "${TOP_DIR}"/build/ssl/rsa-2.{crt,key} "${TOP_DIR}/server/ssl/"
 cp "${TOP_DIR}/build/ssl/rsa-1.crt" "${TOP_DIR}/client/ssl/"
+cp "${TOP_DIR}"/build/ssl/rsa-3.{crt,key} "${TOP_DIR}/client/ssl/"
 
 # ML-DSA-65 CA (mldsa65-1)
 openssl req \
@@ -75,7 +92,24 @@ openssl x509 \
     -copy_extensions copyall \
     -out "${TOP_DIR}/build/ssl/mldsa65-2.crt"
 
+# ML-DSA-65 client cert (mldsa65-3)
+openssl req \
+    -newkey mldsa65 \
+    -keyout "${TOP_DIR}/build/ssl/mldsa65-3.key" \
+    -subj /CN=Client \
+    -nodes \
+    -out "${TOP_DIR}/build/ssl/mldsa65-3.csr"
+
+openssl x509 \
+    -req \
+    -in "${TOP_DIR}/build/ssl/mldsa65-3.csr" \
+    -CA "${TOP_DIR}/build/ssl/mldsa65-1.crt" \
+    -CAkey "${TOP_DIR}/build/ssl/mldsa65-1.key" \
+    -CAcreateserial \
+    -out "${TOP_DIR}/build/ssl/mldsa65-3.crt"
+
 cp "${TOP_DIR}"/build/ssl/mldsa65-2.{crt,key} "${TOP_DIR}/server/ssl/"
 cp "${TOP_DIR}/build/ssl/mldsa65-1.crt" "${TOP_DIR}/client/ssl/"
+cp "${TOP_DIR}"/build/ssl/mldsa65-3.{crt,key} "${TOP_DIR}/client/ssl/"
 
 echo "OK"

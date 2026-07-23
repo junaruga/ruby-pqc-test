@@ -108,3 +108,53 @@ jobs:
           script/run_drbssl_server_mldsa65.rb &
           sleep 3
           script/run_drbssl_client_mldsa65.rb
+
+  drbssl-rsa-client-cert:
+    name: drbssl RSA client cert
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: drb
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+      - *reinstall-openssl-gem
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run drbssl RSA client cert server and client
+        run: |
+          script/run_drbssl_server_rsa_client_cert.rb &
+          sleep 3
+          script/run_drbssl_client_rsa_client_cert.rb
+
+  drbssl-mldsa65-client-cert:
+    name: drbssl ML-DSA-65 client cert
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: drb
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+      - *reinstall-openssl-gem
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run drbssl ML-DSA-65 client cert server and client
+        run: |
+          script/run_drbssl_server_mldsa65_client_cert.rb &
+          sleep 3
+          script/run_drbssl_client_mldsa65_client_cert.rb
