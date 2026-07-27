@@ -27,7 +27,11 @@ end
 config = {
   SSLCertificate: OpenSSL::X509::Certificate.new(File.read('server/ssl/mldsa65-2.crt')),
   SSLPrivateKey: OpenSSL::PKey.read(File.read('server/ssl/mldsa65-2.key')),
+  # CA certificate to verify client's certificate (mldsa65-3.crt)
   SSLCACertificateFile: 'client/ssl/mldsa65-1.crt',
+  # CA certificate(s) sent to the client indicating which certificates the
+  # server accepts. Helps the client choose which certificate to present.
+  # Optional when the client only has one certificate (mldsa65-3.crt).
   SSLClientCA: OpenSSL::X509::Certificate.new(File.read('client/ssl/mldsa65-1.crt')),
   SSLVerifyMode: OpenSSL::SSL::VERIFY_PEER | OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT
 }

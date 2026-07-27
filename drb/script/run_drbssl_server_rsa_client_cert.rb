@@ -27,7 +27,11 @@ end
 config = {
   SSLCertificate: OpenSSL::X509::Certificate.new(File.read('server/ssl/rsa-2.crt')),
   SSLPrivateKey: OpenSSL::PKey::RSA.new(File.read('server/ssl/rsa-2.key')),
+  # CA certificate to verify client's certificate (rsa-3.crt)
   SSLCACertificateFile: 'client/ssl/rsa-1.crt',
+  # CA certificate(s) sent to the client indicating which certificates the
+  # server accepts. Helps the client choose which certificate to present.
+  # Optional when the client only has one certificate (rsa-3.crt).
   SSLClientCA: OpenSSL::X509::Certificate.new(File.read('client/ssl/rsa-1.crt')),
   SSLVerifyMode: OpenSSL::SSL::VERIFY_PEER | OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT
 }
