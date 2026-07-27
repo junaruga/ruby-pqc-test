@@ -18,7 +18,7 @@ $ script/run_druby_client.rb
 2026-07-21 15:54:18 +0100
 ```
 
-## drbssl (SSL)
+## drbssl (SSL) with default generated server RSA key/cert
 
 Run the drbssl server.
 
@@ -48,7 +48,7 @@ server: Signature Algorithm: rsa_pss_rsae_sha256
 server: Peer Signature Algorithm:
 ```
 
-## drbssl RSA (SSL with pre-generated key/cert)
+## drbssl (SSL) with pre-generated server RSA key/cert
 
 Set up SSL certificates.
 
@@ -86,7 +86,7 @@ server: Signature Algorithm: rsa_pss_rsae_sha256
 server: Peer Signature Algorithm:
 ```
 
-## drbssl ML-DSA-65 (SSL with pre-generated key/cert)
+## drbssl (SSL) with pre-generated server ML-DSA-65 key/cert
 
 Set up SSL certificates.
 
@@ -124,7 +124,7 @@ server: Signature Algorithm: mldsa65
 server: Peer Signature Algorithm:
 ```
 
-## drbssl RSA client cert (SSL with client certificate authentication)
+## drbssl (SSL) with pre-generated server/client RSA key/cert
 
 Set up SSL certificates.
 
@@ -162,7 +162,7 @@ server: Signature Algorithm: rsa_pss_rsae_sha256
 server: Peer Signature Algorithm: rsa_pss_rsae_sha256
 ```
 
-## drbssl ML-DSA-65 client cert (SSL with client certificate authentication)
+## drbssl (SSL) with pre-generated server/client ML-DSA-65 key/cert
 
 Set up SSL certificates.
 
