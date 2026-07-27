@@ -200,6 +200,34 @@ server: Signature Algorithm: mldsa65
 server: Peer Signature Algorithm: mldsa65
 ```
 
+## drbssl (SSL) with generated server ML-DSA-65 key/cert (development)
+
+Run the drbssl server.
+
+```
+$ script/run_drbssl_server_mldsa65_generated.rb
+server: Key: #<OpenSSL::PKey::PKey:0x00007fc8247c6188 type_name=ML-DSA-65 provider=default>
+server: Signature algorithm: ML-DSA-65
+```
+
+Run the client in another terminal.
+
+```
+client: 2026-07-27 19:28:22 +0100
+client: Group: SecP256r1MLKEM768
+client: Signature Algorithm:
+client: Peer Signature Algorithm: mldsa65
+```
+
+The server shows additional SSL socket info after the client connects.
+
+```
+...
+server: Group: SecP256r1MLKEM768
+server: Signature Algorithm: mldsa65
+server: Peer Signature Algorithm:
+```
+
 ## drbssl (SSL) with generated server ML-DSA-65/RSA key/cert (development)
 
 Run the drbssl server.
