@@ -268,3 +268,52 @@ server: Group: X25519MLKEM768
 server: Signature Algorithm: rsa_pss_rsae_sha256
 server: Peer Signature Algorithm:
 ```
+
+## drbssl (SSL) with pre-generated server ML-DSA-65/RSA key/cert (development)
+
+Set up SSL certificates.
+
+```
+$ script/setup.sh
+...
+OK
+```
+
+Run the drbssl server.
+
+```
+$ script/run_drbssl_server_multi_cert_mldsa65_rsa.rb
+server: Key: #<OpenSSL::PKey::PKey:0x00007f267ea56760 type_name=ML-DSA-65 provider=default>
+server: Signature algorithm: ML-DSA-65
+server: Key: #<OpenSSL::PKey::RSA:0x00007f267ea56620 oid=rsaEncryption type_name=RSA provider=default>
+server: Signature algorithm: sha256WithRSAEncryption
+```
+
+Run the client in another terminal.
+
+```
+$ script/run_drbssl_client_multi_cert_mldsa65_rsa.rb
+--- Client 1: ML-DSA-65 ---
+client: 2026-07-28 13:19:31 +0100
+client: Group: X25519MLKEM768
+client: Signature Algorithm:
+client: Peer Signature Algorithm: mldsa65
+--- Client 2: RSA ---
+client: 2026-07-28 13:19:31 +0100
+client: Group: X25519MLKEM768
+client: Signature Algorithm:
+client: Peer Signature Algorithm: rsa_pss_rsae_sha256
+```
+
+The server shows additional SSL socket info after the client connects.
+
+```
+$ script/run_drbssl_server_multi_cert_mldsa65_rsa.rb
+...
+server: Group: X25519MLKEM768
+server: Signature Algorithm: mldsa65
+server: Peer Signature Algorithm:
+server: Group: X25519MLKEM768
+server: Signature Algorithm: rsa_pss_rsae_sha256
+server: Peer Signature Algorithm:
+```
