@@ -33,7 +33,7 @@ jobs:
           script/run_druby_client.rb
 
   drbssl:
-    name: drbssl
+    name: drbssl auto-generated RSA
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -55,12 +55,12 @@ jobs:
 
       - name: Run drbssl server and client
         run: |
-          script/run_drbssl_server.rb &
+          script/run_drbssl_server_rsa_auto_generated.rb &
           sleep 3
-          script/run_drbssl_client.rb
+          script/run_drbssl_client_rsa_auto_generated.rb
 
   drbssl-rsa:
-    name: drbssl RSA
+    name: drbssl pre-generated RSA
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -80,12 +80,12 @@ jobs:
 
       - name: Run drbssl RSA server and client
         run: |
-          script/run_drbssl_server_rsa.rb &
+          script/run_drbssl_server_rsa_pre_generated.rb &
           sleep 3
-          script/run_drbssl_client_rsa.rb
+          script/run_drbssl_client_rsa_pre_generated.rb
 
   drbssl-mldsa65:
-    name: drbssl ML-DSA-65
+    name: drbssl pre-generated ML-DSA-65
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -105,12 +105,12 @@ jobs:
 
       - name: Run drbssl ML-DSA-65 server and client
         run: |
-          script/run_drbssl_server_mldsa65.rb &
+          script/run_drbssl_server_mldsa65_pre_generated.rb &
           sleep 3
-          script/run_drbssl_client_mldsa65.rb
+          script/run_drbssl_client_mldsa65_pre_generated.rb
 
   drbssl-rsa-client-cert:
-    name: drbssl RSA client cert
+    name: drbssl pre-generated RSA with client cert
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -130,12 +130,12 @@ jobs:
 
       - name: Run drbssl RSA client cert server and client
         run: |
-          script/run_drbssl_server_rsa_client_cert.rb &
+          script/run_drbssl_server_rsa_client_cert_pre_generated.rb &
           sleep 3
-          script/run_drbssl_client_rsa_client_cert.rb
+          script/run_drbssl_client_rsa_client_cert_pre_generated.rb
 
   drbssl-mldsa65-client-cert:
-    name: drbssl ML-DSA-65 client cert
+    name: drbssl pre-generated ML-DSA-65 with client cert
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -155,12 +155,12 @@ jobs:
 
       - name: Run drbssl ML-DSA-65 client cert server and client
         run: |
-          script/run_drbssl_server_mldsa65_client_cert.rb &
+          script/run_drbssl_server_mldsa65_client_cert_pre_generated.rb &
           sleep 3
-          script/run_drbssl_client_mldsa65_client_cert.rb
+          script/run_drbssl_client_mldsa65_client_cert_pre_generated.rb
 
   drbssl-mldsa65-generated:
-    name: drbssl ML-DSA-65 generated (development)
+    name: drbssl auto-generated ML-DSA-65 (development)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -180,12 +180,12 @@ jobs:
 
       - name: Run drbssl ML-DSA-65 generated server and client
         run: |
-          script/run_drbssl_server_mldsa65_generated.rb &
+          script/run_drbssl_server_mldsa65_auto_generated.rb &
           sleep 3
-          script/run_drbssl_client_mldsa65_generated.rb
+          script/run_drbssl_client_mldsa65_auto_generated.rb
 
   drbssl-multi-cert:
-    name: drbssl multi cert (development)
+    name: drbssl auto-generated ML-DSA-65/RSA multi cert (development)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -205,12 +205,12 @@ jobs:
 
       - name: Run drbssl multi cert server and client
         run: |
-          script/run_drbssl_server_multi_cert.rb &
+          script/run_drbssl_server_multi_cert_auto_generated.rb &
           sleep 3
-          script/run_drbssl_client_multi_cert.rb
+          script/run_drbssl_client_multi_cert_auto_generated.rb
 
   drbssl-multi-cert-mldsa65-rsa:
-    name: drbssl multi cert ML-DSA-65/RSA (development)
+    name: drbssl pre-generated ML-DSA-65/RSA multi cert (development)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -233,12 +233,12 @@ jobs:
 
       - name: Run drbssl multi cert ML-DSA-65/RSA server and client
         run: |
-          script/run_drbssl_server_multi_cert_mldsa65_rsa.rb &
+          script/run_drbssl_server_multi_cert_mldsa65_rsa_pre_generated.rb &
           sleep 3
-          script/run_drbssl_client_multi_cert_mldsa65_rsa.rb
+          script/run_drbssl_client_multi_cert_mldsa65_rsa_pre_generated.rb
 
   drbssl-multi-cert-mldsa65-rsa-client-cert:
-    name: drbssl multi cert ML-DSA-65/RSA client cert (development)
+    name: drbssl pre-generated ML-DSA-65/RSA multi cert with client cert (development)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -261,6 +261,6 @@ jobs:
 
       - name: Run drbssl multi cert ML-DSA-65/RSA client cert server and client
         run: |
-          script/run_drbssl_server_multi_cert_mldsa65_rsa_client_cert.rb &
+          script/run_drbssl_server_multi_cert_mldsa65_rsa_client_cert_pre_generated.rb &
           sleep 3
-          script/run_drbssl_client_multi_cert_mldsa65_rsa_client_cert.rb
+          script/run_drbssl_client_multi_cert_mldsa65_rsa_client_cert_pre_generated.rb
