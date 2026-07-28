@@ -236,3 +236,31 @@ jobs:
           script/run_drbssl_server_multi_cert_mldsa65_rsa.rb &
           sleep 3
           script/run_drbssl_client_multi_cert_mldsa65_rsa.rb
+
+  drbssl-multi-cert-mldsa65-rsa-client-cert:
+    name: drbssl multi cert ML-DSA-65/RSA client cert (development)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['4.0', 'head']
+    defaults:
+      run:
+        working-directory: drb
+    steps:
+      - uses: actions/checkout@v4
+      - *setup-ruby
+      - uses: ./.github/actions/setup-openssl
+      - *reinstall-openssl-gem
+
+      - name: Clone drb
+        run: git clone -b wip/support-pqc https://github.com/junaruga/ruby-drb.git ~/git/ruby/drb
+
+      - name: Setup
+        run: script/setup.sh
+
+      - name: Run drbssl multi cert ML-DSA-65/RSA client cert server and client
+        run: |
+          script/run_drbssl_server_multi_cert_mldsa65_rsa_client_cert.rb &
+          sleep 3
+          script/run_drbssl_client_multi_cert_mldsa65_rsa_client_cert.rb
