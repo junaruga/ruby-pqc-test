@@ -15,7 +15,7 @@ Manage files to implment PQC features to ruby/* repositories.
 | [ruby/net-http](https://github.com/ruby/net-http) | default gem | | | not yet | Update the code comments and add PQC tests |
 | [ruby/open-uri](https://github.com/ruby/open-uri) | default gem | | | not yet | Add PQC tests |
 | [ruby/spec](https://github.com/ruby/spec) | spec/ directory | | | not yet | Add PQC tests |
-| [ruby/drb](https://github.com/ruby/drb) | bundled gem | | [./drb](./drb) | in progress | Add PQC features |
+| [ruby/drb](https://github.com/ruby/drb) | bundled gem | [ruby/drb#52](https://github.com/ruby/drb/issues/52) | [./drb](./drb) | in progress | Add PQC features |
 | [ruby/rbs](https://github.com/ruby/rbs) | bundled gem | | | not yet | Not sure. There is `stdlib/openssl/0/openssl.rbs`. |
 
 [ruby-openssl-pqc-test]: https://github.com/junaruga/ruby-openssl-pqc-test
