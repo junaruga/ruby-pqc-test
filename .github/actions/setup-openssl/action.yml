@@ -1,5 +1,5 @@
 name: Setup OpenSSL
-description: Cache, compile, and configure OpenSSL 3.6.2
+description: Cache, compile, and configure OpenSSL 3.4.6
 
 runs:
   using: composite
@@ -8,7 +8,7 @@ runs:
       uses: actions/cache@v5
       with:
         path: ~/openssl
-        key: openssl-${{ runner.os }}-openssl-3.6.2
+        key: openssl-${{ runner.os }}-openssl-3.4.6
 
     - name: Compile OpenSSL library
       if: steps.cache-openssl.outputs.cache-hit != 'true'
@@ -19,7 +19,7 @@ runs:
       run: |
         set -x
         mkdir -p tmp/build-openssl && cd tmp/build-openssl
-        git clone -b openssl-3.6.2 --depth 1 https://github.com/openssl/openssl.git .
+        git clone -b openssl-3.4.6 --depth 1 https://github.com/openssl/openssl.git .
         echo "Git commit: $(git rev-parse HEAD)"
         ./Configure --prefix=$HOME/openssl --libdir=lib enable-fips no-tests
         make -j4 && make install_sw && make install_fips && make install_ssldirs

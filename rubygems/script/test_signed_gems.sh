@@ -19,7 +19,7 @@ mkdir -p "${TOP_DIR}/build/ssl"
 # Workaround: Use my fork repository
 if [ ! -d "${RUBYGEMS_TOP_DIR}" ]; then
     git clone https://github.com/junaruga/rubygems.git \
-        -b wip/rubygems-pqc-signed-gem "${RUBYGEMS_TOP_DIR}"
+        -b wip/rubygems-pqc-signed-gem-debug "${RUBYGEMS_TOP_DIR}"
 fi
 pushd "${RUBYGEMS_TOP_DIR}"
 bin/rake setup
