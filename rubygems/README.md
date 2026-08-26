@@ -351,7 +351,7 @@ OK: All tests passed.
 
 ## Signed gem
 
-Install expect package used in the following testing script.
+Install expect package used in the following testing scripts.
 
 Fedora Linux:
 
@@ -365,7 +365,29 @@ Ubuntu:
 $ sudo apt install expect
 ```
 
-Test gem signing and installation with ML-DSA (PQC) and RSA (non-PQC) certificates.
+### Signed gem setup
+
+`script/setup_signed_gems.sh` generates RSA and ML-DSA-65 gem signing
+certificates and builds four signed gems (`hello-pqc-sign` 0.1.0/0.1.1
+signed with ML-DSA-65, `hello-non-pqc-sign` 0.1.0/0.1.1 signed with RSA).
+It is called by `script/setup.sh` automatically.
+
+This script uses the forked RubyGems
+(`junaruga/rubygems`, branch `wip/rubygems-pqc-signed-gem`) which adds
+ML-DSA signed gem support.
+
+### Signed gem install and update over HTTPS
+
+The HTTPS client tests (`script/run_https_client.sh`) also test signed gem
+`gem install` (version 0.1.0) and `gem update` (to version 0.1.1) with
+`-P HighSecurity` using the forked RubyGems. Both `hello-pqc-sign`
+(ML-DSA-65) and `hello-non-pqc-sign` (RSA) are tested in each TLS mode
+(non-PQC, PQC single, PQC dual).
+
+### Local signed gem test
+
+Test gem signing and installation with ML-DSA (PQC) and RSA (non-PQC)
+certificates from local `.gem` files (without a gem server).
 
 ```
 $ script/test_signed_gems.sh
