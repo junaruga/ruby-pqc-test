@@ -5,7 +5,7 @@ set -eux -o pipefail
 TOP_DIR="$(dirname "${0}")/.."
 
 # Clean working directories
-rm -rf "${TOP_DIR}/build/gem/*/*.gem"
+rm -f "${TOP_DIR}"/build/gem/*/*.gem
 rm -rf "${TOP_DIR}/server"
 rm -rf "${TOP_DIR}/client"
 
@@ -17,6 +17,9 @@ pushd "${TOP_DIR}/build/gem/hello_pqc_011"
 gem build hello-pqc.gemspec
 popd
 
+# Build RSA and ML-DSA-65 signed gems
+"${TOP_DIR}/script/setup_signed_gems.sh"
+
 # Set up server gem directory
 mkdir -p "${TOP_DIR}/server/gem/gems"
 mkdir -p "${TOP_DIR}/server/gem/cache"
@@ -27,6 +30,14 @@ cp -p "${TOP_DIR}/build/gem/hello_pqc_010/hello-pqc.gemspec" \
     "${TOP_DIR}/server/gem/specifications/hello-pqc-0.1.0.gemspec"
 cp -p "${TOP_DIR}/build/gem/hello_pqc_011/hello-pqc.gemspec" \
     "${TOP_DIR}/server/gem/specifications/hello-pqc-0.1.1.gemspec"
+cp -p "${TOP_DIR}/build/gem/hello_pqc_sign_010/hello-pqc-sign.gemspec" \
+    "${TOP_DIR}/server/gem/specifications/hello-pqc-sign-0.1.0.gemspec"
+cp -p "${TOP_DIR}/build/gem/hello_pqc_sign_011/hello-pqc-sign.gemspec" \
+    "${TOP_DIR}/server/gem/specifications/hello-pqc-sign-0.1.1.gemspec"
+cp -p "${TOP_DIR}/build/gem/hello_non_pqc_sign_010/hello-non-pqc-sign.gemspec" \
+    "${TOP_DIR}/server/gem/specifications/hello-non-pqc-sign-0.1.0.gemspec"
+cp -p "${TOP_DIR}/build/gem/hello_non_pqc_sign_011/hello-non-pqc-sign.gemspec" \
+    "${TOP_DIR}/server/gem/specifications/hello-non-pqc-sign-0.1.1.gemspec"
 
 gem install rubygems-generate_index
 gem generate_index -d "${TOP_DIR}/server/gem"
@@ -107,6 +118,10 @@ openssl x509 \
 
 cp "${TOP_DIR}"/build/ssl/mldsa65-2.{crt,key} "${TOP_DIR}/server/ssl/"
 cp "${TOP_DIR}/build/ssl/mldsa65-1.crt" "${TOP_DIR}/client/ssl/"
+
+# Copy gem signing public certs for client trust setup
+cp -p "${TOP_DIR}"/build/ssl/gem-public_cert_{rsa,mldsa}.pem \
+    "${TOP_DIR}/client/ssl/"
 
 # Install gems for RubyGems server
 gem install rubygems-server
