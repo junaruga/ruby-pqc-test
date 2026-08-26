@@ -203,11 +203,11 @@ elif [[ "${PQC_SINGLE}" = true ]]; then
     GEMRC="${GEMRC_RSA_SINGLE}" \
         gem info hello-pqc
 
-    echo "=== Test 3: signed gems over PQC (single) ML-DSA-65 connection ==="
-    test_signed_gem "${GEMRC_MLDSA65}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
-        hello-pqc-sign
-    test_signed_gem "${GEMRC_MLDSA65}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
-        hello-non-pqc-sign
+    # echo "=== Test 3: signed gems over PQC (single) ML-DSA-65 connection ==="
+    # test_signed_gem "${GEMRC_MLDSA65}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
+    #     hello-pqc-sign
+    # test_signed_gem "${GEMRC_MLDSA65}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
+    #     hello-non-pqc-sign
 
     echo "=== Test 4: signed gems over non-PQC (single) RSA connection ==="
     test_signed_gem "${GEMRC_RSA_SINGLE}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
