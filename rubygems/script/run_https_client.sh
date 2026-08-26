@@ -40,7 +40,7 @@ SSL_DIR="${TOP_DIR}/client/ssl"
 PORT_HTTPS=18443
 PORT_HTTPS_NON_PQC=18444
 RUBYGEMS_TOP_DIR="${HOME}/git/ruby/rubygems"
-GEM_SIGNED="ruby -I${RUBYGEMS_TOP_DIR}/lib ${RUBYGEMS_TOP_DIR}/exe/gem"
+GEM_SIGNED="${HOME}/.local/ruby-4.1.0-debug-d190c264ec-openssl-1.1.1w-debug/bin/ruby -I${RUBYGEMS_TOP_DIR}/lib ${RUBYGEMS_TOP_DIR}/exe/gem"
 
 rm -rf "${TEST_GEM_HOME}"
 mkdir -p "${TEST_GEM_HOME}"
