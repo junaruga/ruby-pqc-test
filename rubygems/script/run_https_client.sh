@@ -39,6 +39,8 @@ TEST_GEM_HOME="${TOP_DIR}/client/gem_home"
 SSL_DIR="${TOP_DIR}/client/ssl"
 PORT_HTTPS=18443
 PORT_HTTPS_NON_PQC=18444
+RUBYGEMS_TOP_DIR="${HOME}/git/ruby/rubygems"
+GEM_SIGNED="ruby -I${RUBYGEMS_TOP_DIR}/lib ${RUBYGEMS_TOP_DIR}/exe/gem"
 
 rm -rf "${TEST_GEM_HOME}"
 mkdir -p "${TEST_GEM_HOME}"
@@ -92,6 +94,35 @@ generate_gemrc "${GEMRC_RSA}" "${SSL_DIR}/rsa-1.crt" \
 generate_gemrc "${GEMRC_RSA_SINGLE}" "${SSL_DIR}/rsa-1.crt" \
     "https://localhost:${PORT_HTTPS_NON_PQC}/"
 
+# Install and update one signed gem with the HighSecurity trust policy,
+# using the forked RubyGems that supports ML-DSA signed gems.
+# Usage: test_signed_gem GEMRC_FILE SIGNING_CERT GEM_NAME [OPENSSL_CONF_FILE]
+test_signed_gem() {
+    local gemrc="${1}"
+    local cert="${2}"
+    local name="${3}"
+    local openssl_conf="${4:-}"
+    local -a envs=()
+
+    if [[ -n "${openssl_conf}" ]]; then
+        envs+=("OPENSSL_CONF=${openssl_conf}")
+    fi
+
+    rm -rf "${TEST_GEM_HOME}"
+    mkdir -p "${TEST_GEM_HOME}"
+
+    ${GEM_SIGNED} cert --add "${cert}"
+
+    env "${envs[@]}" GEMRC="${gemrc}" \
+        ${GEM_SIGNED} install -v 0.1.0 "${name}" -P HighSecurity -V
+    env "${envs[@]}" GEMRC="${gemrc}" \
+        ${GEM_SIGNED} update "${name}" -P HighSecurity -V
+    GEMRC="${gemrc}" ${GEM_SIGNED} list | grep "${name}"
+    GEMRC="${gemrc}" ${GEM_SIGNED} list "${name}" | grep "0\.1\.1"
+
+    ${GEM_SIGNED} cert --remove jaruga
+}
+
 GEMRC="${GEMRC_RSA}" \
     gem env gemhome
 
@@ -131,6 +162,18 @@ if [[ "${PQC_DUAL}" = true ]]; then
         gem list | grep hello-pqc
     GEMRC="${GEMRC_RSA}" \
         gem info hello-pqc
+
+    echo "=== Test 3: signed gems over ML-DSA-65 connection ==="
+    test_signed_gem "${GEMRC_MLDSA65}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
+        hello-pqc-sign "${SSL_DIR}/mldsa65-client.cnf"
+    test_signed_gem "${GEMRC_MLDSA65}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
+        hello-non-pqc-sign "${SSL_DIR}/mldsa65-client.cnf"
+
+    echo "=== Test 4: signed gems over RSA connection ==="
+    test_signed_gem "${GEMRC_RSA}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
+        hello-pqc-sign "${SSL_DIR}/rsa-client.cnf"
+    test_signed_gem "${GEMRC_RSA}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
+        hello-non-pqc-sign "${SSL_DIR}/rsa-client.cnf"
 elif [[ "${PQC_SINGLE}" = true ]]; then
     echo "Mode: PQC (single), non-PQC (single)"
 
@@ -159,6 +202,18 @@ elif [[ "${PQC_SINGLE}" = true ]]; then
         gem list | grep hello-pqc
     GEMRC="${GEMRC_RSA_SINGLE}" \
         gem info hello-pqc
+
+    echo "=== Test 3: signed gems over PQC (single) ML-DSA-65 connection ==="
+    test_signed_gem "${GEMRC_MLDSA65}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
+        hello-pqc-sign
+    test_signed_gem "${GEMRC_MLDSA65}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
+        hello-non-pqc-sign
+
+    echo "=== Test 4: signed gems over non-PQC (single) RSA connection ==="
+    test_signed_gem "${GEMRC_RSA_SINGLE}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
+        hello-pqc-sign
+    test_signed_gem "${GEMRC_RSA_SINGLE}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
+        hello-non-pqc-sign
 else
     echo "Mode: non-PQC"
 
@@ -170,6 +225,12 @@ else
         gem list | grep hello-pqc
     GEMRC="${GEMRC_RSA}" \
         gem info hello-pqc
+
+    echo "=== Test: signed gems over RSA connection ==="
+    test_signed_gem "${GEMRC_RSA}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
+        hello-pqc-sign
+    test_signed_gem "${GEMRC_RSA}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
+        hello-non-pqc-sign
 fi
 
 echo "OK: All tests passed."
