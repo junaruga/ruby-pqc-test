@@ -28,6 +28,10 @@ jobs:
 
       - uses: ./.github/actions/setup-openssl
 
+      - &install-expect
+        name: Install expect
+        run: sudo apt install -y expect
+
       - name: Setup
         run: script/setup.sh
 
@@ -58,6 +62,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *install-expect
 
       - name: Setup
         run: script/setup.sh
@@ -82,6 +87,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *install-expect
 
       - name: Setup
         run: script/setup.sh
@@ -110,6 +116,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *install-expect
 
       - name: Setup
         run: script/setup_nginx.sh
@@ -138,6 +145,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *install-expect
 
       - name: Setup
         run: script/setup.sh
@@ -162,6 +170,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *install-expect
 
       - name: Setup
         run: script/setup.sh
@@ -190,6 +199,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *install-expect
 
       - name: Setup
         run: script/setup_nginx.sh
@@ -218,6 +228,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *install-expect
 
       - name: Setup
         run: script/setup.sh
@@ -242,6 +253,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *install-expect
 
       - name: Setup
         run: script/setup.sh
@@ -270,6 +282,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
+      - *install-expect
 
       - name: Setup
         run: script/setup_nginx.sh
@@ -300,9 +313,7 @@ jobs:
       - uses: actions/checkout@v4
       - *setup-ruby
       - uses: ./.github/actions/setup-openssl
-
-      - name: Install expect
-        run: sudo apt install -y expect
+      - *install-expect
 
       - name: Run signed gem test
         run: script/test_signed_gems.sh
