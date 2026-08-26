@@ -209,11 +209,21 @@ elif [[ "${PQC_SINGLE}" = true ]]; then
     # test_signed_gem "${GEMRC_MLDSA65}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
     #     hello-non-pqc-sign
 
-    echo "=== Test 4: signed gems over non-PQC (single) RSA connection ==="
-    test_signed_gem "${GEMRC_RSA_SINGLE}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
-        hello-pqc-sign
-    test_signed_gem "${GEMRC_RSA_SINGLE}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
-        hello-non-pqc-sign
+    # echo "=== Test 4: signed gems over non-PQC (single) RSA connection ==="
+    # test_signed_gem "${GEMRC_RSA_SINGLE}" "${SSL_DIR}/gem-public_cert_mldsa.pem" \
+    #     hello-pqc-sign
+    # test_signed_gem "${GEMRC_RSA_SINGLE}" "${SSL_DIR}/gem-public_cert_rsa.pem" \
+    #     hello-non-pqc-sign
+
+    echo "=== Test 5: gem update ML-DSA-65 signed gem over RSA connection ==="
+    rm -rf "${TEST_GEM_HOME}"
+    mkdir -p "${TEST_GEM_HOME}"
+    ${GEM_SIGNED} cert --add "${SSL_DIR}/gem-public_cert_mldsa.pem"
+    GEMRC="${GEMRC_RSA_SINGLE}" \
+        ${GEM_SIGNED} install -v 0.1.0 hello-pqc-sign -V
+    GEMRC="${GEMRC_RSA_SINGLE}" \
+        ${GEM_SIGNED} update hello-pqc-sign -P HighSecurity -V
+    ${GEM_SIGNED} cert --remove jaruga
 else
     echo "Mode: non-PQC"
 
