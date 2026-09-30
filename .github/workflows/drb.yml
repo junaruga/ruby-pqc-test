@@ -176,7 +176,7 @@ jobs:
       - *reinstall-openssl-gem
 
       - name: Clone drb
-        run: git clone -b wip/support-pqc https://github.com/junaruga/ruby-drb.git ~/git/ruby/drb
+        run: git clone -b ssl-context https://github.com/kou/drb.git ~/git/ruby/drb
 
       - name: Run drbssl ML-DSA-65 generated server and client
         run: |
@@ -201,7 +201,7 @@ jobs:
       - *reinstall-openssl-gem
 
       - name: Clone drb
-        run: git clone -b wip/support-pqc https://github.com/junaruga/ruby-drb.git ~/git/ruby/drb
+        run: git clone -b ssl-context https://github.com/kou/drb.git ~/git/ruby/drb
 
       - name: Run drbssl multi cert server and client
         run: |
@@ -226,7 +226,7 @@ jobs:
       - *reinstall-openssl-gem
 
       - name: Clone drb
-        run: git clone -b wip/support-pqc https://github.com/junaruga/ruby-drb.git ~/git/ruby/drb
+        run: git clone -b ssl-context https://github.com/kou/drb.git ~/git/ruby/drb
 
       - name: Setup
         run: script/setup.sh
@@ -254,7 +254,7 @@ jobs:
       - *reinstall-openssl-gem
 
       - name: Clone drb
-        run: git clone -b wip/support-pqc https://github.com/junaruga/ruby-drb.git ~/git/ruby/drb
+        run: git clone -b ssl-context https://github.com/kou/drb.git ~/git/ruby/drb
 
       - name: Setup
         run: script/setup.sh

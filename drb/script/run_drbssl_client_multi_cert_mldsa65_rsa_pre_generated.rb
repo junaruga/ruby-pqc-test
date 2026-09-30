@@ -13,13 +13,12 @@ SERVER_URI = 'drbssl://localhost:8787'
 # Client 1: Negotiate with server's ML-DSA-65 cert
 puts '--- Client 1: ML-DSA-65 ---'
 
-config1 = {
-  SSLSignatureAlgorithms: 'mldsa65',
-  SSLCACertificateFile: 'client/ssl/mldsa65-1.crt',
-  SSLVerifyMode: OpenSSL::SSL::VERIFY_PEER
-}
+ctx1 = OpenSSL::SSL::SSLContext.new
+ctx1.sigalgs = 'mldsa65'
+ctx1.ca_file = 'client/ssl/mldsa65-1.crt'
+ctx1.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-DRb.start_service(nil, nil, config1)
+DRb.start_service(nil, nil, {SSLContext: ctx1})
 
 timeserver = DRbObject.new_with_uri(SERVER_URI)
 puts "client: #{timeserver.current_time}"
@@ -42,13 +41,12 @@ DRb::DRbConn.stop_pool
 # Client 2: Negotiate with server's RSA cert
 puts '--- Client 2: RSA ---'
 
-config2 = {
-  SSLSignatureAlgorithms: 'rsa_pss_rsae_sha256',
-  SSLCACertificateFile: 'client/ssl/rsa-1.crt',
-  SSLVerifyMode: OpenSSL::SSL::VERIFY_PEER
-}
+ctx2 = OpenSSL::SSL::SSLContext.new
+ctx2.sigalgs = 'rsa_pss_rsae_sha256'
+ctx2.ca_file = 'client/ssl/rsa-1.crt'
+ctx2.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-DRb.start_service(nil, nil, config2)
+DRb.start_service(nil, nil, {SSLContext: ctx2})
 
 timeserver = DRbObject.new_with_uri(SERVER_URI)
 puts "client: #{timeserver.current_time}"

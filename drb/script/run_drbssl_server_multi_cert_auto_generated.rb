@@ -27,28 +27,47 @@ class TimeServer
   end
 end
 
-config = {
-  SSLCertName: [['C', 'JP'], ['O', 'Foo.DRuby.Org'], ['CN', 'Sample']],
-  SSLPrivateKeyAlgorithms: %w[ML-DSA-65 RSA],
-  SSLSignatureAlgorithms: 'mldsa65:rsa_pss_rsae_sha256',
-  SSLVerifyMode: OpenSSL::SSL::VERIFY_NONE
-}
+cert_name = OpenSSL::X509::Name.new([
+  ['C', 'JP'], ['O', 'Foo.DRuby.Org'], ['CN', 'Sample']
+])
+
+# Generate ML-DSA-65 self-signed certificate
+mldsa65_key = OpenSSL::PKey.generate_key('ML-DSA-65')
+mldsa65_cert = OpenSSL::X509::Certificate.new
+mldsa65_cert.subject = cert_name
+mldsa65_cert.issuer = cert_name
+mldsa65_cert.serial = 0
+mldsa65_cert.not_before = Time.now
+mldsa65_cert.not_after = Time.now + 3600
+mldsa65_cert.public_key = mldsa65_key
+mldsa65_cert.sign(mldsa65_key, nil)
+
+# Generate RSA self-signed certificate
+rsa_key = OpenSSL::PKey::RSA.new(2048)
+rsa_cert = OpenSSL::X509::Certificate.new
+rsa_cert.subject = cert_name
+rsa_cert.issuer = cert_name
+rsa_cert.serial = 1
+rsa_cert.not_before = Time.now
+rsa_cert.not_after = Time.now + 3600
+rsa_cert.public_key = rsa_key
+rsa_cert.sign(rsa_key, 'SHA256')
+
+ctx = OpenSSL::SSL::SSLContext.new
+ctx.add_certificate(mldsa65_cert, mldsa65_key)
+ctx.add_certificate(rsa_cert, rsa_key)
+ctx.sigalgs = 'mldsa65:rsa_pss_rsae_sha256'
+ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 # The object that handles requests on the server
 FRONT_OBJECT = TimeServer.new
 
-DRb.start_service(URI, FRONT_OBJECT, config)
+DRb.start_service(URI, FRONT_OBJECT, {SSLContext: ctx})
 
-# Inspect the generated certificates
-server = DRb.primary_server
-protocol = server.instance_variable_get(:@protocol)
-ssl_config = protocol.instance_variable_get(:@config)
-certs = ssl_config.instance_variable_get(:@certs)
-
-certs.each do |cert, pkey|
-  puts "server: Key: #{pkey.inspect}"
-  puts "server: Signature algorithm: #{cert.signature_algorithm}"
-end
+puts "server: Key: #{mldsa65_key.inspect}"
+puts "server: Signature algorithm: #{mldsa65_cert.signature_algorithm}"
+puts "server: Key: #{rsa_key.inspect}"
+puts "server: Signature algorithm: #{rsa_cert.signature_algorithm}"
 
 # Wait for the drb server thread to finish before exiting.
 DRb.thread.join

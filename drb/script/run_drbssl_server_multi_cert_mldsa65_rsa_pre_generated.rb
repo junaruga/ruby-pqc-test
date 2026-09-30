@@ -27,36 +27,26 @@ class TimeServer
   end
 end
 
-config = {
-  SSLCertificates: [
-    [
-      OpenSSL::X509::Certificate.new(File.read('server/ssl/mldsa65-2.crt')),
-      OpenSSL::PKey.read(File.read('server/ssl/mldsa65-2.key'))
-    ],
-    [
-      OpenSSL::X509::Certificate.new(File.read('server/ssl/rsa-2.crt')),
-      OpenSSL::PKey::RSA.new(File.read('server/ssl/rsa-2.key'))
-    ]
-  ],
-  SSLSignatureAlgorithms: 'mldsa65:rsa_pss_rsae_sha256',
-  SSLVerifyMode: OpenSSL::SSL::VERIFY_PEER
-}
+mldsa65_cert = OpenSSL::X509::Certificate.new(File.read('server/ssl/mldsa65-2.crt'))
+mldsa65_key = OpenSSL::PKey.read(File.read('server/ssl/mldsa65-2.key'))
+rsa_cert = OpenSSL::X509::Certificate.new(File.read('server/ssl/rsa-2.crt'))
+rsa_key = OpenSSL::PKey::RSA.new(File.read('server/ssl/rsa-2.key'))
+
+ctx = OpenSSL::SSL::SSLContext.new
+ctx.add_certificate(mldsa65_cert, mldsa65_key)
+ctx.add_certificate(rsa_cert, rsa_key)
+ctx.sigalgs = 'mldsa65:rsa_pss_rsae_sha256'
+ctx.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
 # The object that handles requests on the server
 FRONT_OBJECT = TimeServer.new
 
-DRb.start_service(URI, FRONT_OBJECT, config)
+DRb.start_service(URI, FRONT_OBJECT, {SSLContext: ctx})
 
-# Inspect the given certificates
-server = DRb.primary_server
-protocol = server.instance_variable_get(:@protocol)
-ssl_config = protocol.instance_variable_get(:@config)
-certs = ssl_config.instance_variable_get(:@certs)
-
-certs.each do |cert, pkey|
-  puts "server: Key: #{pkey.inspect}"
-  puts "server: Signature algorithm: #{cert.signature_algorithm}"
-end
+puts "server: Key: #{mldsa65_key.inspect}"
+puts "server: Signature algorithm: #{mldsa65_cert.signature_algorithm}"
+puts "server: Key: #{rsa_key.inspect}"
+puts "server: Signature algorithm: #{rsa_cert.signature_algorithm}"
 
 # Wait for the drb server thread to finish before exiting.
 DRb.thread.join
