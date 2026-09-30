@@ -95,7 +95,7 @@ generate_gemrc "${GEMRC_RSA_SINGLE}" "${SSL_DIR}/rsa-1.crt" \
     "https://localhost:${PORT_HTTPS_NON_PQC}/"
 
 # Install and update one signed gem with the HighSecurity trust policy,
-# using the forked RubyGems that supports ML-DSA signed gems.
+# using RubyGems that supports ML-DSA signed gems.
 # Usage: test_signed_gem GEMRC_FILE SIGNING_CERT GEM_NAME [OPENSSL_CONF_FILE]
 test_signed_gem() {
     local gemrc="${1}"
