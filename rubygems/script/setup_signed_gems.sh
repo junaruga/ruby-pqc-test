@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Generate gem signing certificates (RSA and ML-DSA-65) and build the
-# signed test gems. Requires the forked RubyGems and expect.
+# signed test gems. Requires RubyGems and expect.
 set -eux -o pipefail
 
 TOP_DIR="$(cd "$(dirname "${0}")/.." && pwd)"
@@ -15,10 +15,9 @@ rm -f "${TOP_DIR}"/build/gem/hello_non_pqc_sign_*/*.gem
 
 mkdir -p "${TOP_DIR}/build/ssl"
 
-# Workaround: Use my fork repository
 if [ ! -d "${RUBYGEMS_TOP_DIR}" ]; then
-    git clone https://github.com/junaruga/rubygems.git \
-        -b wip/rubygems-pqc-signed-gem "${RUBYGEMS_TOP_DIR}"
+    git clone https://github.com/ruby/rubygems.git \
+        "${RUBYGEMS_TOP_DIR}"
 fi
 pushd "${RUBYGEMS_TOP_DIR}"
 bin/rake setup

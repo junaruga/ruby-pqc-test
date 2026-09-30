@@ -372,15 +372,13 @@ certificates and builds four signed gems (`hello-pqc-sign` 0.1.0/0.1.1
 signed with ML-DSA-65, `hello-non-pqc-sign` 0.1.0/0.1.1 signed with RSA).
 It is called by `script/setup.sh` automatically.
 
-This script uses the forked RubyGems
-(`junaruga/rubygems`, branch `wip/rubygems-pqc-signed-gem`) which adds
-ML-DSA signed gem support.
+This script uses `ruby/rubygems` which supports ML-DSA signed gems.
 
 ### Signed gem install and update over HTTPS
 
 The HTTPS client tests (`script/run_https_client.sh`) also test signed gem
 `gem install` (version 0.1.0) and `gem update` (to version 0.1.1) with
-`-P HighSecurity` using the forked RubyGems. Both `hello-pqc-sign`
+`-P HighSecurity` using RubyGems. Both `hello-pqc-sign`
 (ML-DSA-65) and `hello-non-pqc-sign` (RSA) are tested in each TLS mode
 (non-PQC, PQC single, PQC dual).
 
