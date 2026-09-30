@@ -10,14 +10,12 @@ require 'drb/ssl'
 # The URI to connect to
 SERVER_URI = 'drbssl://localhost:8787'
 
-config = {
-  # This SSLGroup is necessary to pass on CI's OpenSSL 3.6.2.
-  SSLGroups: 'SecP256r1MLKEM768',
-  SSLSignatureAlgorithms: 'mldsa65',
-  SSLVerifyMode: OpenSSL::SSL::VERIFY_NONE
-}
+ctx = OpenSSL::SSL::SSLContext.new
+ctx.groups = 'SecP256r1MLKEM768'
+ctx.sigalgs = 'mldsa65'
+ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-DRb.start_service(nil, nil, config)
+DRb.start_service(nil, nil, {SSLContext: ctx})
 
 timeserver = DRbObject.new_with_uri(SERVER_URI)
 puts "client: #{timeserver.current_time}"
