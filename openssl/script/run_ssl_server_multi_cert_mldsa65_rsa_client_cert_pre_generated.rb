@@ -21,6 +21,7 @@ store.add_cert(mldsa65_ca_cert)
 store.add_cert(rsa_ca_cert)
 
 ctx = OpenSSL::SSL::SSLContext.new
+ctx.groups = 'X25519MLKEM768'
 ctx.add_certificate(mldsa65_cert, mldsa65_key)
 ctx.add_certificate(rsa_cert, rsa_key)
 ctx.sigalgs = 'mldsa65:rsa_pss_rsae_sha256'

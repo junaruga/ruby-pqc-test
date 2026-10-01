@@ -14,6 +14,7 @@ rsa_cert = OpenSSL::X509::Certificate.new(File.read('server/ssl/rsa-2.crt'))
 rsa_key = OpenSSL::PKey::RSA.new(File.read('server/ssl/rsa-2.key'))
 
 ctx = OpenSSL::SSL::SSLContext.new
+ctx.groups = 'X25519MLKEM768'
 ctx.add_certificate(mldsa65_cert, mldsa65_key)
 ctx.add_certificate(rsa_cert, rsa_key)
 ctx.sigalgs = 'mldsa65:rsa_pss_rsae_sha256'
