@@ -160,7 +160,7 @@ jobs:
           script/run_drbssl_client_mldsa65_client_cert_pre_generated.rb
 
   drbssl-mldsa65-generated:
-    name: drbssl auto-generated ML-DSA-65 (development)
+    name: drbssl auto-generated ML-DSA-65
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -176,7 +176,7 @@ jobs:
       - *reinstall-openssl-gem
 
       - name: Clone drb
-        run: git clone -b ssl-context https://github.com/kou/drb.git ~/git/ruby/drb
+        run: git clone https://github.com/ruby/drb.git ~/git/ruby/drb
 
       - name: Run drbssl ML-DSA-65 generated server and client
         run: |
@@ -185,7 +185,7 @@ jobs:
           script/run_drbssl_client_mldsa65_auto_generated.rb
 
   drbssl-multi-cert:
-    name: drbssl auto-generated ML-DSA-65/RSA multi cert (development)
+    name: drbssl auto-generated ML-DSA-65/RSA multi cert
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -201,7 +201,7 @@ jobs:
       - *reinstall-openssl-gem
 
       - name: Clone drb
-        run: git clone -b ssl-context https://github.com/kou/drb.git ~/git/ruby/drb
+        run: git clone https://github.com/ruby/drb.git ~/git/ruby/drb
 
       - name: Run drbssl multi cert server and client
         run: |
@@ -210,7 +210,7 @@ jobs:
           script/run_drbssl_client_multi_cert_auto_generated.rb
 
   drbssl-multi-cert-mldsa65-rsa:
-    name: drbssl pre-generated ML-DSA-65/RSA multi cert (development)
+    name: drbssl pre-generated ML-DSA-65/RSA multi cert
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -226,7 +226,7 @@ jobs:
       - *reinstall-openssl-gem
 
       - name: Clone drb
-        run: git clone -b ssl-context https://github.com/kou/drb.git ~/git/ruby/drb
+        run: git clone https://github.com/ruby/drb.git ~/git/ruby/drb
 
       - name: Setup
         run: script/setup.sh
@@ -238,7 +238,7 @@ jobs:
           script/run_drbssl_client_multi_cert_mldsa65_rsa_pre_generated.rb
 
   drbssl-multi-cert-mldsa65-rsa-client-cert:
-    name: drbssl pre-generated ML-DSA-65/RSA multi cert with client cert (development)
+    name: drbssl pre-generated ML-DSA-65/RSA multi cert with client cert
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -254,7 +254,7 @@ jobs:
       - *reinstall-openssl-gem
 
       - name: Clone drb
-        run: git clone -b ssl-context https://github.com/kou/drb.git ~/git/ruby/drb
+        run: git clone https://github.com/ruby/drb.git ~/git/ruby/drb
 
       - name: Setup
         run: script/setup.sh
