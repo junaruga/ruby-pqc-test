@@ -12,6 +12,7 @@ server_cert = OpenSSL::X509::Certificate.new(File.read('server/ssl/mldsa65-2.crt
 server_key = OpenSSL::PKey.read(File.read('server/ssl/mldsa65-2.key'))
 
 ctx = OpenSSL::SSL::SSLContext.new
+ctx.groups = 'X25519MLKEM768'
 ctx.add_certificate(server_cert, server_key)
 # CA certificate to verify client's certificate (mldsa65-3.crt)
 ctx.ca_file = 'client/ssl/mldsa65-1.crt'
